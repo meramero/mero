@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="zh-HK" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MM — Your AI Stylist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --warm-white: #FDFBF7;
+  --charcoal: #1A1814;
+  --mid: #6B6560;
+  --gold: #C9A84C;
+  --gold-light: #E8D5A3;
+  --blush: #E8C5B0;
+  --sage: #8FA98A;
+  --ink: #2C2820;
+  --border: rgba(26,24,20,0.12);
+  --radius: 16px;
+  /* Theme tokens — overridden by .theme-tech / .theme-warm */
+  --bg-mood: var(--warm-white);
+  --accent-mood: var(--gold);
+  --nav-bg: var(--warm-white);
+}
+
+/* ── INTERFACE THEME: TECH/FUTURISTIC ── */
+body.theme-tech {
+  --cream: #0E1117;
+  --warm-white: #141820;
+  --charcoal: #E8EAF0;
+  --mid: #8A8FA8;
+  --gold: #4FC3F7;
+  --gold-light: #B3E5FC;
+  --blush: #CE93D8;
+  --ink: #F0F4FF;
+  --border: rgba(79,195,247,0.18);
+  --bg-mood: #0E1117;
+  --nav-bg: rgba(14,17,23,0.92);
+  background: #0E1117;
+  color: #E8EAF0;
+}
+body.theme-tech .weather-banner { background: linear-gradient(135deg,#0D2137,#071428); }
+body.theme-tech .dna-card { background: linear-gradient(135deg,#0D1A3A,#1A0F2E); }
+body.theme-tech .sidebar { background: #111520; }
+body.theme-tech .profile-mini { background: linear-gradient(135deg,#1A2A4A,#0D1A2A); }
+body.theme-tech nav { background: rgba(14,17,23,0.94); backdrop-filter: blur(12px); border-bottom-color: rgba(79,195,247,0.15); }
+body.theme-tech .landing-h1 em { color: #4FC3F7; }
+body.theme-tech .landing-tag { border-color: rgba(79,195,247,0.4); color: #4FC3F7; }
+body.theme-tech .tone-card.selected, body.theme-tech .season-card.selected .season-info,
+body.theme-tech .budget-option.selected, body.theme-tech .chip.selected,
+body.theme-tech .style-card.selected { background: #1A2A4A; color: #B3E5FC; border-color: #4FC3F7; }
+body.theme-tech .sidebar-item.active { background: linear-gradient(90deg,#1A2A4A,#0D1A2A); color: #4FC3F7; }
+body.theme-tech .btn-gold { background: #4FC3F7; color: #071428; }
+body.theme-tech .outfit-card.featured { border-color: #4FC3F7; }
+body.theme-tech .daily-deal { background: linear-gradient(135deg,#0D1A3A,#1A0F2E); }
+body.theme-tech .upload-area { background: #111520; border-color: rgba(79,195,247,0.25); }
+
+/* ── INTERFACE THEME: WARM/PROFESSIONAL ── */
+body.theme-warm {
+  --cream: #FFF8F0;
+  --warm-white: #FFFCF8;
+  --charcoal: #2D1F0E;
+  --mid: #7A6050;
+  --gold: #E07B39;
+  --gold-light: #F4C08A;
+  --border: rgba(45,31,14,0.12);
+}
+body.theme-warm .weather-banner { background: linear-gradient(135deg,#5C3317,#3D1F08); }
+body.theme-warm .dna-card { background: linear-gradient(135deg,#3D1F08,#5C3317); }
+body.theme-warm .sidebar { background: #FFF0E0; }
+body.theme-warm .btn-gold { background: #E07B39; }
+body.theme-warm .landing-h1 em { color: #F4C08A; }
+
+/* ── WEATHER MOOD: RAINY background ── */
+body.weather-rain .main-content { background: linear-gradient(180deg, rgba(100,120,150,0.08) 0%, transparent 60%); }
+body.weather-rain #tab-today::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(80,100,140,0.12) 0%, transparent 70%);
+}
+body.weather-rain .outfit-visual { background: linear-gradient(180deg,#D0D8E8,#B8C4D8) !important; }
+body.weather-sunny .outfit-visual { filter: saturate(1.1); }
+
+/* ── WEATHER INDICATOR BAR ── */
+.weather-mood-bar {
+  height: 3px; width: 100%;
+  background: linear-gradient(90deg, #4FC3F7, #87CEEB, #B0D4F0);
+  transition: background 1s;
+}
+body.weather-rain .weather-mood-bar { background: linear-gradient(90deg,#6080A0,#8090B0,#9AAAC0); }
+body.weather-sunny .weather-mood-bar { background: linear-gradient(90deg,#FFD54F,#FFB300,#FF8F00); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--warm-white);
+  color: var(--charcoal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; min-height: 100vh; animation: fadeIn 0.5s ease; }
+.screen.active { display: flex; flex-direction: column; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ── NAV ── */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+  background: var(--warm-white);
+  position: sticky; top: 0; z-index: 100;
+}
+.logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px; letter-spacing: -0.5px;
+  color: var(--charcoal);
+}
+.logo span { color: var(--gold); }
+.nav-tabs { display: flex; gap: 4px; }
+.nav-tab {
+  padding: 6px 14px; border-radius: 20px; border: none;
+  background: none; font-size: 13px; font-family: 'DM Sans', sans-serif;
+  color: var(--mid); cursor: pointer; transition: all 0.2s;
+  font-weight: 500;
+}
+.nav-tab.active, .nav-tab:hover { background: var(--charcoal); color: var(--cream); }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  background: var(--charcoal); color: var(--cream);
+  border: none; border-radius: 50px; padding: 14px 32px;
+  font-size: 15px; font-weight: 500; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover { background: var(--ink); transform: translateY(-1px); }
+.btn-outline {
+  background: none; color: var(--charcoal);
+  border: 1.5px solid var(--charcoal); border-radius: 50px; padding: 12px 28px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.btn-outline:hover { background: var(--charcoal); color: var(--cream); }
+.btn-gold {
+  background: var(--gold); color: var(--charcoal);
+  border: none; border-radius: 50px; padding: 14px 32px;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.btn-gold:hover { background: #b8942e; transform: translateY(-1px); }
+
+/* ════════════════════════════════
+   SCREEN 1 — LANDING
+════════════════════════════════ */
+#s-landing {
+  background: var(--charcoal);
+  color: var(--cream);
+  align-items: center; justify-content: center;
+  text-align: center; padding: 60px 28px;
+  position: relative; overflow: hidden;
+}
+#s-landing::after {
+  content: '';
+  position: absolute; top: -40%; right: -20%;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.landing-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+  border: 1px solid rgba(201,168,76,0.4); display: inline-block;
+  padding: 6px 16px; border-radius: 20px;
+}
+.landing-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(42px, 8vw, 80px);
+  line-height: 1.05; letter-spacing: -2px;
+  margin-bottom: 8px;
+}
+.landing-h1 em { font-style: italic; color: var(--gold-light); }
+.landing-sub {
+  font-size: 17px; color: rgba(245,240,232,0.65);
+  max-width: 400px; line-height: 1.6; margin: 20px auto 40px;
+  font-weight: 300;
+}
+.landing-features {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 48px;
+}
+.feat-pill {
+  padding: 8px 16px; border-radius: 20px;
+  background: rgba(245,240,232,0.08);
+  border: 1px solid rgba(245,240,232,0.15);
+  font-size: 13px; color: rgba(245,240,232,0.8);
+}
+.landing-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.landing-cta .btn-gold { padding: 16px 40px; font-size: 16px; }
+
+/* ════════════════════════════════
+   SCREEN 2 — ONBOARDING Q1
+════════════════════════════════ */
+#s-q1 { background: var(--warm-white); }
+.onboard-container { max-width: 640px; margin: 0 auto; padding: 40px 28px; flex: 1; }
+.step-bar { display: flex; gap: 6px; margin-bottom: 36px; }
+.step-dot {
+  height: 3px; border-radius: 2px; flex: 1;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.step-dot.done { background: var(--charcoal); }
+.step-dot.active { background: var(--gold); }
+.q-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 2px; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.q-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px; line-height: 1.2; margin-bottom: 8px;
+}
+.q-sub { font-size: 15px; color: var(--mid); margin-bottom: 32px; line-height: 1.5; }
+
+/* Tone selector */
+.tone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+.tone-card {
+  border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 16px 12px; text-align: center; cursor: pointer;
+  transition: all 0.2s; background: var(--warm-white);
+}
+.tone-card:hover { border-color: var(--gold); background: #FBF7EF; }
+.tone-card.selected { border-color: var(--charcoal); background: var(--charcoal); color: var(--cream); }
+.tone-emoji { font-size: 22px; margin-bottom: 6px; }
+.tone-name { font-size: 13px; font-weight: 500; }
+.tone-desc { font-size: 11px; color: var(--mid); margin-top: 3px; }
+.tone-card.selected .tone-desc { color: rgba(245,240,232,0.6); }
+
+/* Upload area */
+.upload-area {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 40px; text-align: center; cursor: pointer;
+  transition: all 0.2s; margin-bottom: 20px;
+  background: var(--cream);
+}
+.upload-area:hover { border-color: var(--gold); background: #FBF7EF; }
+.upload-icon { font-size: 32px; margin-bottom: 12px; }
+.upload-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+.upload-hint { font-size: 13px; color: var(--mid); }
+
+/* Measurement inputs */
+.measure-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-label { font-size: 13px; font-weight: 500; color: var(--mid); }
+.input-field {
+  border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 12px 16px; font-size: 15px; font-family: 'DM Sans', sans-serif;
+  background: var(--warm-white); color: var(--charcoal);
+  transition: border-color 0.2s; width: 100%;
+}
+.input-field:focus { outline: none; border-color: var(--charcoal); }
+
+/* Season color swatches */
+.season-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+.season-card {
+  border-radius: 14px; overflow: hidden; cursor: pointer;
+  border: 2px solid transparent; transition: all 0.2s;
+}
+.season-card.selected { border-color: var(--charcoal); transform: scale(1.03); }
+.season-swatch { height: 70px; }
+.season-info { padding: 10px 10px; background: var(--warm-white); border-top: 1px solid var(--border); }
+.season-name { font-size: 13px; font-weight: 500; }
+.season-tone { font-size: 11px; color: var(--mid); }
+
+/* Style grid */
+.style-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 28px; }
+.style-card {
+  border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 14px; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 12px;
+}
+.style-card:hover { border-color: var(--gold); }
+.style-card.selected { border-color: var(--charcoal); background: var(--charcoal); color: var(--cream); }
+.style-icon { font-size: 24px; }
+.style-name { font-size: 14px; font-weight: 500; }
+.style-desc { font-size: 12px; color: var(--mid); }
+.style-card.selected .style-desc { color: rgba(245,240,232,0.6); }
+
+/* Budget selector */
+.budget-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+.budget-option {
+  border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; cursor: pointer; transition: all 0.2s;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.budget-option:hover { border-color: var(--gold); }
+.budget-option.selected { border-color: var(--charcoal); background: var(--charcoal); color: var(--cream); }
+.budget-label { font-size: 15px; font-weight: 500; }
+.budget-desc { font-size: 13px; color: var(--mid); }
+.budget-option.selected .budget-desc { color: rgba(245,240,232,0.6); }
+
+/* Personality chips */
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.chip {
+  padding: 8px 16px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: var(--warm-white);
+  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+}
+.chip:hover { border-color: var(--gold); }
+.chip.selected { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+
+/* ════════════════════════════════
+   SCREEN 3 — MAIN DASHBOARD
+════════════════════════════════ */
+#s-main { background: var(--warm-white); }
+.main-layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 65px); }
+
+/* Sidebar */
+.sidebar {
+  border-right: 1px solid var(--border);
+  padding: 28px 20px;
+  background: var(--cream);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.profile-mini {
+  padding: 16px; border-radius: 14px; background: var(--charcoal);
+  color: var(--cream); margin-bottom: 16px;
+}
+.profile-name { font-size: 16px; font-weight: 500; margin-bottom: 2px; }
+.profile-dna { font-size: 12px; color: var(--gold-light); }
+.sidebar-section { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); padding: 16px 12px 8px; font-family: 'Space Mono', monospace; }
+.sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 10px; cursor: pointer;
+  transition: all 0.2s; font-size: 14px; font-weight: 500;
+  border: none; background: none; width: 100%; text-align: left;
+  color: var(--charcoal);
+}
+.sidebar-item:hover { background: rgba(26,24,20,0.06); }
+.sidebar-item.active { background: var(--charcoal); color: var(--cream); }
+.sidebar-icon { width: 20px; text-align: center; font-size: 16px; }
+
+/* Main content area */
+.main-content { padding: 32px; overflow-y: auto; }
+.content-panel { display: none; }
+.content-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+/* Section header */
+.section-header { margin-bottom: 28px; }
+.section-header h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px; margin-bottom: 6px;
+}
+.section-header p { font-size: 15px; color: var(--mid); }
+
+/* Today's outfits */
+.weather-banner {
+  background: linear-gradient(135deg, #2C4A6E, #1A2E45);
+  border-radius: var(--radius); padding: 20px 24px;
+  color: white; display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 24px;
+}
+.weather-info { display: flex; align-items: center; gap: 16px; }
+.weather-icon { font-size: 36px; }
+.weather-temp { font-size: 28px; font-weight: 600; }
+.weather-desc { font-size: 14px; opacity: 0.75; }
+.weather-occasion { font-size: 13px; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
+
+.outfit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+.outfit-card {
+  border: 1.5px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; cursor: pointer; transition: all 0.25s;
+  background: var(--warm-white);
+}
+.outfit-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.08); }
+.outfit-card.featured { border-color: var(--gold); border-width: 2px; }
+.outfit-visual {
+  height: 200px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  position: relative; overflow: hidden;
+}
+.outfit-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--gold); color: var(--charcoal);
+  font-size: 10px; font-weight: 600; padding: 4px 10px;
+  border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.outfit-clothes { font-size: 36px; line-height: 1; text-align: center; }
+.outfit-info { padding: 14px 16px; }
+.outfit-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.outfit-desc { font-size: 12px; color: var(--mid); line-height: 1.5; margin-bottom: 10px; }
+.outfit-score {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--mid);
+}
+.score-bar {
+  flex: 1; height: 4px; border-radius: 2px;
+  background: var(--border); overflow: hidden;
+}
+.score-fill { height: 100%; border-radius: 2px; background: var(--gold); }
+.outfit-actions { display: flex; gap: 6px; padding: 0 16px 14px; }
+.act-btn {
+  flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border);
+  background: none; font-size: 12px; cursor: pointer; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+}
+.act-btn:hover { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+.act-btn.primary { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+
+/* Daily deal */
+.daily-deal {
+  background: var(--charcoal); border-radius: var(--radius);
+  padding: 20px 24px; color: var(--cream);
+  display: flex; align-items: center; gap: 20px; margin-bottom: 24px;
+}
+.deal-badge {
+  background: var(--gold); color: var(--charcoal);
+  font-size: 10px; font-weight: 700; padding: 4px 10px;
+  border-radius: 4px; letter-spacing: 1px; text-transform: uppercase;
+  white-space: nowrap;
+}
+.deal-info { flex: 1; }
+.deal-item { font-size: 16px; font-weight: 500; margin-bottom: 2px; }
+.deal-price { display: flex; align-items: center; gap: 8px; }
+.deal-new { font-size: 20px; font-weight: 600; color: var(--gold); }
+.deal-old { font-size: 14px; text-decoration: line-through; opacity: 0.5; }
+.deal-timer { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--gold-light); }
+
+/* Chat panel */
+.chat-container { display: flex; flex-direction: column; height: calc(100vh - 200px); }
+.tone-selector-mini {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.tone-mini-btn {
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--border); background: none;
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+}
+.tone-mini-btn.active { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px;
+  background: var(--cream); border-radius: 14px;
+  display: flex; flex-direction: column; gap: 14px;
+  margin-bottom: 14px; min-height: 300px;
+}
+.msg { max-width: 78%; }
+.msg.ai { align-self: flex-start; }
+.msg.user { align-self: flex-end; }
+.msg-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--charcoal); display: flex; align-items: center;
+  justify-content: center; font-size: 13px; margin-bottom: 5px;
+  color: var(--cream);
+}
+.msg-bubble {
+  padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.6;
+}
+.msg.ai .msg-bubble { background: var(--warm-white); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; }
+.msg.user .msg-bubble { background: var(--charcoal); color: var(--cream); border-radius: 16px 4px 16px 16px; }
+.chat-input-row {
+  display: flex; gap: 10px; align-items: flex-end;
+}
+.chat-input {
+  flex: 1; border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 12px 16px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+  background: var(--warm-white); resize: none; min-height: 48px;
+  color: var(--charcoal);
+}
+.chat-input:focus { outline: none; border-color: var(--charcoal); }
+.chat-send {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--charcoal); color: var(--cream);
+  border: none; cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.chat-send:hover { background: var(--gold); color: var(--charcoal); }
+.typing-indicator { display: flex; gap: 4px; align-items: center; padding: 12px 16px; background: var(--warm-white); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; width: fit-content; }
+.typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mid); animation: typingDot 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot { 0%,60%,100%{opacity:0.3;transform:scale(1)} 30%{opacity:1;transform:scale(1.15)} }
+
+/* Wardrobe panel */
+.wardrobe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+.wardrobe-item {
+  border: 1.5px solid var(--border); border-radius: 12px;
+  overflow: hidden; cursor: pointer; transition: all 0.2s;
+  background: var(--cream);
+}
+.wardrobe-item:hover { border-color: var(--gold); transform: scale(1.02); }
+.wardrobe-thumb { height: 100px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+.wardrobe-meta { padding: 8px 10px; border-top: 1px solid var(--border); }
+.wardrobe-type { font-size: 12px; font-weight: 500; }
+.wardrobe-color { font-size: 11px; color: var(--mid); }
+.add-wardrobe {
+  border: 2px dashed var(--border); border-radius: 12px;
+  height: 142px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; gap: 6px;
+  font-size: 13px; color: var(--mid);
+}
+.add-wardrobe:hover { border-color: var(--gold); color: var(--gold); }
+.add-wardrobe .plus { font-size: 24px; }
+
+/* Profile DNA */
+.dna-card {
+  background: var(--charcoal); border-radius: var(--radius);
+  padding: 28px; color: var(--cream); margin-bottom: 20px;
+}
+.dna-title { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 16px; }
+.dna-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.dna-tag {
+  padding: 6px 14px; border-radius: 20px;
+  background: rgba(245,240,232,0.12);
+  border: 1px solid rgba(245,240,232,0.2);
+  font-size: 13px;
+}
+.dna-tag.primary { background: var(--gold); color: var(--charcoal); font-weight: 600; border-color: var(--gold); }
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-card {
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; background: var(--cream);
+}
+.stat-val { font-size: 28px; font-weight: 600; margin-bottom: 2px; }
+.stat-label { font-size: 12px; color: var(--mid); }
+
+/* Map panel */
+.map-placeholder {
+  height: 300px; background: linear-gradient(135deg, #e8e4db, #d4cfc3);
+  border-radius: var(--radius); display: flex; align-items: center;
+  justify-content: center; margin-bottom: 20px; position: relative;
+  overflow: hidden;
+}
+.map-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+.map-pin { font-size: 24px; position: relative; z-index: 1; }
+.map-pin-label {
+  position: absolute; background: var(--charcoal); color: var(--cream);
+  font-size: 11px; padding: 3px 8px; border-radius: 4px;
+  white-space: nowrap; top: -28px; left: 50%; transform: translateX(-50%);
+}
+.shop-list { display: flex; flex-direction: column; gap: 10px; }
+.shop-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border: 1px solid var(--border);
+  border-radius: 12px; cursor: pointer; transition: all 0.2s;
+  background: var(--warm-white);
+}
+.shop-item:hover { border-color: var(--gold); }
+.shop-icon { font-size: 24px; }
+.shop-name { font-size: 14px; font-weight: 500; }
+.shop-info { font-size: 12px; color: var(--mid); }
+.shop-dist {
+  margin-left: auto; font-size: 12px;
+  background: var(--cream); padding: 4px 10px; border-radius: 20px;
+  font-family: 'Space Mono', monospace;
+}
+
+/* AR panel */
+.ar-container {
+  background: var(--charcoal); border-radius: var(--radius);
+  padding: 40px; text-align: center; color: var(--cream); margin-bottom: 20px;
+}
+.ar-icon { font-size: 64px; margin-bottom: 16px; }
+.ar-title { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 10px; }
+.ar-sub { font-size: 15px; opacity: 0.7; margin-bottom: 24px; }
+
+/* Metaverse panel */
+.meta-container {
+  background: linear-gradient(135deg, #1A0F2E, #0D1A3A);
+  border-radius: var(--radius); padding: 40px; text-align: center;
+  color: var(--cream); margin-bottom: 20px; position: relative; overflow: hidden;
+}
+.meta-container::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.2) 0%, transparent 60%);
+}
+.meta-icon { font-size: 60px; margin-bottom: 16px; position: relative; z-index: 1; }
+.meta-title { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 6px; position: relative; z-index: 1; }
+.meta-sub { font-size: 15px; opacity: 0.7; margin-bottom: 24px; position: relative; z-index: 1; }
+.meta-features { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+.meta-feat {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  padding: 8px 16px; border-radius: 20px; font-size: 13px;
+}
+
+/* Rating modal overlay */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 1000;
+  align-items: center; justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--warm-white); border-radius: 20px;
+  padding: 32px; max-width: 480px; width: 90%;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.modal-title { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 8px; }
+.modal-sub { font-size: 14px; color: var(--mid); margin-bottom: 24px; }
+.rating-row { margin-bottom: 16px; }
+.rating-label { font-size: 13px; font-weight: 500; margin-bottom: 8px; display: flex; justify-content: space-between; }
+.stars { display: flex; gap: 6px; }
+.star { font-size: 24px; cursor: pointer; filter: grayscale(1); transition: filter 0.15s; }
+.star.lit { filter: none; }
+.modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .outfit-grid { grid-template-columns: 1fr; }
+  .season-grid { grid-template-columns: repeat(2, 1fr); }
+  .tone-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── KOL SEARCH BAR ── */
+.kol-search-wrap { position: relative; margin-bottom: 16px; }
+.kol-search-input {
+  width: 100%; padding: 12px 16px 12px 40px;
+  border: 1.5px solid var(--border); border-radius: 50px;
+  font-size: 14px; font-family: 'DM Sans', sans-serif;
+  background: var(--cream); color: var(--charcoal);
+  transition: border-color 0.2s;
+}
+.kol-search-input:focus { outline: none; border-color: var(--gold); }
+.kol-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
+.kol-result-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.kol-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 20px;
+  background: var(--cream); border: 1px solid var(--border);
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+}
+.kol-chip:hover { border-color: var(--gold); }
+.kol-chip-avatar { width: 20px; height: 20px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+
+/* ── SCORING PANEL ── */
+.score-panel { background: var(--cream); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
+.score-panel-title { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+.score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.score-row-label { font-size: 12px; color: var(--mid); min-width: 90px; }
+.score-row-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.score-row-fill { height: 100%; border-radius: 3px; background: var(--gold); transition: width 1s ease; }
+.score-row-val { font-size: 12px; font-family: 'Space Mono', monospace; min-width: 34px; text-align: right; }
+
+/* ── BRAND MOTTO TAG ── */
+.motto-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 6px;
+  background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
+  font-size: 11px; font-style: italic; color: var(--gold);
+}
+
+/* ── AFFILIATE BADGE ── */
+.aff-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; background: var(--cream); border: 1px solid var(--border);
+  padding: 2px 8px; border-radius: 4px; color: var(--mid);
+}
+
+/* ── THEME SWITCHER ── */
+.theme-switcher { display: flex; gap: 6px; align-items: center; }
+.theme-btn {
+  width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent;
+  cursor: pointer; transition: all 0.2s; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.theme-btn.active { border-color: var(--gold); transform: scale(1.1); }
+
+/* ── VINTAGE TOGGLE ── */
+.vintage-banner {
+  background: linear-gradient(135deg,#2C1810,#4A2C18);
+  border-radius: 10px; padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; color: var(--cream);
+}
+.vintage-label { font-size: 13px; }
+.toggle-pill {
+  width: 44px; height: 24px; border-radius: 12px;
+  background: var(--border); border: none; cursor: pointer;
+  position: relative; transition: background 0.3s;
+}
+.toggle-pill.on { background: var(--gold); }
+.toggle-knob {
+  position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: white; transition: transform 0.3s;
+}
+.toggle-pill.on .toggle-knob { transform: translateX(20px); }
+
+/* ── COLOUR DEPTH PICKER ── */
+.colour-depth-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.cdepth-option {
+  padding: 8px 14px; border-radius: 20px;
+  border: 1.5px solid var(--border); font-size: 12px;
+  cursor: pointer; transition: all 0.2s; background: var(--warm-white);
+}
+.cdepth-option.selected { border-color: var(--charcoal); background: var(--charcoal); color: var(--cream); }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── LANGUAGE SWITCHER ── */
+.lang-switcher {
+  display: flex; align-items: center; gap: 3px;
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 20px; padding: 3px; flex-shrink: 0;
+}
+.lang-btn {
+  padding: 4px 11px; border-radius: 16px; border: none;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  font-family: 'Space Mono', monospace; transition: all 0.2s;
+  background: none; color: var(--mid); letter-spacing: 0.02em;
+}
+.lang-btn.active { background: var(--charcoal); color: var(--cream); }
+body.theme-tech .lang-switcher { background: #1A2030; border-color: rgba(79,195,247,0.2); }
+body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
+/* Landing lang switcher (floated top-right) */
+.landing-lang {
+  position: absolute; top: 24px; right: 28px;
+}
+</style>
+</head>
+<body>
+
+<!-- WEATHER MOOD BAR -->
+<div class="weather-mood-bar" id="mood-bar"></div>
+
+<!-- ══ SCREEN 1: LANDING ══ -->
+<div id="s-landing" class="screen active">
+  <!-- Language switcher -->
+  <div class="landing-lang">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="landing-tag" data-i18n="landing_tag">Launching Q1 2026 · Freemium</div>
+  <h1 class="landing-h1" data-i18n="landing_h1">Your AI<br><em>Style BFF</em></h1>
+  <p class="landing-sub" data-i18n="landing_sub">四季膚色分析 · 智能穿搭 · AR虛擬試衣 · 元宇宙時尚社區</p>
+  <div class="landing-features">
+    <span class="feat-pill" data-i18n="feat_q1">🌸 Q1 膚色體型分析</span>
+    <span class="feat-pill" data-i18n="feat_q2">👗 Q2 智能衣物配搭</span>
+    <span class="feat-pill" data-i18n="feat_q3">🏪 Q3 品牌KOL合作</span>
+    <span class="feat-pill" data-i18n="feat_q4">🥽 Q4 AR試衣間</span>
+    <span class="feat-pill" data-i18n="feat_q5">🌐 Q5 元宇宙</span>
+  </div>
+  <div class="landing-cta">
+    <button class="btn-gold" onclick="go('s-q1-tone')" data-i18n="landing_cta_start">開始我的風格之旅 ✦</button>
+    <button class="btn-outline" style="color:var(--cream);border-color:rgba(245,240,232,0.4)" onclick="go('s-main')" data-i18n="landing_cta_enter">直接進入 App →</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2a: Q1 — TONE ══ -->
+<div id="s-q1-tone" class="screen">
+  <nav>
+    <div class="logo">MM<span>.</span></div>
+    <div style="font-size:13px;color:var(--mid)">第 1 步，共 5 步</div>
+  </nav>
+  <div class="onboard-container">
+    <div class="step-bar">
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div><div class="step-dot"></div>
+      <div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="q-label">Step 01 — 選擇你的Stylist風格</div>
+    <h2 class="q-title">你想要哪種造型師？</h2>
+    <p class="q-sub">不同風格的AI造型師為你提供個性化建議</p>
+    <div class="tone-grid">
+      <div class="tone-card" onclick="selectTone(this,'bestie')">
+        <div class="tone-emoji">🥂</div>
+        <div class="tone-name">閨蜜版</div>
+        <div class="tone-desc">輕鬆親切，真心話</div>
+      </div>
+      <div class="tone-card selected" onclick="selectTone(this,'mean')">
+        <div class="tone-emoji">💅</div>
+        <div class="tone-name">Mean精版</div>
+        <div class="tone-desc">廣東話犀利點評</div>
+      </div>
+      <div class="tone-card" onclick="selectTone(this,'pro')">
+        <div class="tone-emoji">👔</div>
+        <div class="tone-name">專業造型師</div>
+        <div class="tone-desc">業界標準建議</div>
+      </div>
+      <div class="tone-card" onclick="selectTone(this,'parisian')">
+        <div class="tone-emoji">🗼</div>
+        <div class="tone-name">巴黎時尚風</div>
+        <div class="tone-desc">Less is more</div>
+      </div>
+      <div class="tone-card" onclick="selectTone(this,'kol')">
+        <div class="tone-emoji">📸</div>
+        <div class="tone-name">KOL網紅版</div>
+        <div class="tone-desc">潮流前線資訊</div>
+      </div>
+      <div class="tone-card" onclick="selectTone(this,'vintage')">
+        <div class="tone-emoji">🎞️</div>
+        <div class="tone-name">古著達人版</div>
+        <div class="tone-desc">Vintage & 小眾</div>
+      </div>
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="go('s-q1-body')">繼續 →</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2b: Q1 — BODY ══ -->
+<div id="s-q1-body" class="screen">
+  <nav>
+    <div class="logo">MM<span>.</span></div>
+    <div style="font-size:13px;color:var(--mid)">第 2 步，共 5 步</div>
+  </nav>
+  <div class="onboard-container">
+    <div class="step-bar">
+      <div class="step-dot done"></div><div class="step-dot active"></div>
+      <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="q-label">Step 02 — 上傳照片 + 身體數據</div>
+    <h2 class="q-title">讓我了解你的身型</h2>
+    <p class="q-sub">上傳全身照，AI會分析你的身型比例。所有數據嚴格保密。</p>
+    <div class="upload-area" onclick="simulateUpload(this)">
+      <div class="upload-icon">📸</div>
+      <div class="upload-title">上傳全身照 / 半身照</div>
+      <div class="upload-hint">支援 JPG、PNG · 建議在自然光下拍攝</div>
+    </div>
+    <div class="measure-row">
+      <div class="input-group">
+        <label class="input-label">身高 (cm)</label>
+        <input class="input-field" type="number" placeholder="165" value="165">
+      </div>
+      <div class="input-group">
+        <label class="input-label">體重 (kg)</label>
+        <input class="input-field" type="number" placeholder="55">
+      </div>
+    </div>
+    <div class="measure-row">
+      <div class="input-group">
+        <label class="input-label">胸圍 (cm) — 選填</label>
+        <input class="input-field" type="number" placeholder="88">
+      </div>
+      <div class="input-group">
+        <label class="input-label">腰圍 (cm) — 選填</label>
+        <input class="input-field" type="number" placeholder="68">
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--mid);margin-bottom:20px">AI分析身型：X型 / O型 / H型 / A型 / V型 · 數據同步亞洲/歐美趨勢庫</p>
+    <div style="display:flex;gap:10px">
+      <button class="btn-outline" onclick="go('s-q1-tone')">← 返回</button>
+      <button class="btn-primary" style="flex:1" onclick="go('s-q1-season')">繼續 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2c: Q1 — SEASON COLOR ══ -->
+<div id="s-q1-season" class="screen">
+  <nav>
+    <div class="logo">MM<span>.</span></div>
+    <div style="font-size:13px;color:var(--mid)">第 3 步，共 5 步</div>
+  </nav>
+  <div class="onboard-container">
+    <div class="step-bar">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <div class="q-label">Step 03 — 16型四季膚色分析</div>
+    <h2 class="q-title">你是哪個季節型？</h2>
+    <p class="q-sub">根據膚色、髮色、眼色判斷最適合你的色彩家族</p>
+    <div class="season-grid">
+      <div class="season-card selected" onclick="selectSeason(this)">
+        <div class="season-swatch" style="background:linear-gradient(135deg,#F4E4C1,#E8C99A,#D4A976)"></div>
+        <div class="season-info"><div class="season-name">Spring 春</div><div class="season-tone">暖色系·明亮</div></div>
+      </div>
+      <div class="season-card" onclick="selectSeason(this)">
+        <div class="season-swatch" style="background:linear-gradient(135deg,#B8D4E8,#8FB8D4,#6A9BB8)"></div>
+        <div class="season-info"><div class="season-name">Summer 夏</div><div class="season-tone">冷色系·柔和</div></div>
+      </div>
+      <div class="season-card" onclick="selectSeason(this)">
+        <div class="season-swatch" style="background:linear-gradient(135deg,#C4A882,#A88060,#8C6040)"></div>
+        <div class="season-info"><div class="season-name">Autumn 秋</div><div class="season-tone">暖色系·深沉</div></div>
+      </div>
+      <div class="season-card" onclick="selectSeason(this)">
+        <div class="season-swatch" style="background:linear-gradient(135deg,#8090A8,#607080,#405060)"></div>
+        <div class="season-info"><div class="season-name">Winter 冬</div><div class="season-tone">冷色系·對比強</div></div>
+      </div>
+    </div>
+    <div style="background:var(--cream);border-radius:12px;padding:16px;margin-bottom:24px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px">🌸 Spring 型推薦配色</div>
+      <div style="display:flex;gap:6px">
+        <div style="width:32px;height:32px;border-radius:50%;background:#F4C2A1" title="珊瑚橙"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#F9E4A0" title="奶油黃"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#B8D4A0" title="嫩綠"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#E8B4C0" title="桃粉"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#C4E4E8" title="水藍"></div>
+        <div style="font-size:12px;color:var(--mid);align-self:center;margin-left:4px">你的專屬色板</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-outline" onclick="go('s-q1-body')">← 返回</button>
+      <button class="btn-primary" style="flex:1" onclick="go('s-q1-style')">繼續 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2d: STYLE + PERSONALITY ══ -->
+<div id="s-q1-style" class="screen">
+  <nav>
+    <div class="logo">MM<span>.</span></div>
+    <div style="font-size:13px;color:var(--mid)">第 4 步，共 5 步</div>
+  </nav>
+  <div class="onboard-container">
+    <div class="step-bar">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
+    </div>
+    <div class="q-label">Step 04 — 風格偏好 + 品牌哲學</div>
+    <h2 class="q-title">你的穿衣風格</h2>
+    <p class="q-sub">可以選多個</p>
+    <div class="style-grid">
+      <div class="style-card selected" onclick="this.classList.toggle('selected')">
+        <div class="style-icon">🌸</div><div><div class="style-name">浪漫系</div><div class="style-desc">花卉·蕾絲·飄逸</div></div>
+      </div>
+      <div class="style-card" onclick="this.classList.toggle('selected')">
+        <div class="style-icon">◽</div><div><div class="style-name">極簡主義</div><div class="style-desc">俐落·中性·Clean</div></div>
+      </div>
+      <div class="style-card" onclick="this.classList.toggle('selected')">
+        <div class="style-icon">🌿</div><div><div class="style-name">森林系</div><div class="style-desc">自然·棉麻·大地色</div></div>
+      </div>
+      <div class="style-card" onclick="this.classList.toggle('selected')">
+        <div class="style-icon">🧺</div><div><div class="style-name">Cottage Core</div><div class="style-desc">田園·刺繡·復古</div></div>
+      </div>
+      <div class="style-card" onclick="this.classList.toggle('selected')">
+        <div class="style-icon">🏙️</div><div><div class="style-name">本地風格</div><div class="style-desc">HK/French/Japanese…</div></div>
+      </div>
+      <div class="style-card" onclick="this.classList.toggle('selected')">
+        <div class="style-icon">🎞️</div><div><div class="style-name">Vintage / 古著</div><div class="style-desc">博物館·二手店·小眾</div></div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px">品牌哲學 — 用 Motto 代替品牌名做混搭</p>
+    <div class="chip-group" style="margin-bottom:18px">
+      <div class="chip selected" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Buy less, choose well</em></div>
+      <div class="chip" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Luxury is a state of mind</em></div>
+      <div class="chip" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">西太后：make it last</em></div>
+      <div class="chip" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Quiet elegance</em></div>
+      <div class="chip" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Made to measure</em></div>
+    </div>
+
+    <div class="vintage-banner">
+      <div>
+        <div class="vintage-label">🎞️ 包含古著 / 二手衣物</div>
+        <div style="font-size:11px;opacity:0.65;margin-top:2px">博物館 · Vintage Shop · 二手平台</div>
+      </div>
+      <div class="toggle-pill on" id="vintage-toggle" onclick="this.classList.toggle('on')">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px">顏色深淺偏好</p>
+    <div class="colour-depth-row">
+      <div class="cdepth-option selected" onclick="selectCdepth(this)">深色系</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)">中性色</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)">淺色系</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)">明亮鮮色</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)">灰暗霧感</div>
+    </div>
+
+    <p style="font-size:13px;font-weight:500;margin-bottom:10px">個性標籤 — MBTI / 星座 / 生肖</p>
+    <div class="chip-group">
+      <div class="chip selected" onclick="this.classList.toggle('selected')">INFJ</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">ENFP</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">INTJ</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">ENTP</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">♈ 白羊</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">♍ 處女</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">♎ 天秤</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">🐉 龍年</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">🐰 兔年</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">🐍 蛇年</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">Harry Potter風</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">本地Queen風</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">仙女系</div>
+      <div class="chip" onclick="this.classList.toggle('selected')">極繁主義</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn-outline" onclick="go('s-q1-season')">← 返回</button>
+      <button class="btn-primary" style="flex:1" onclick="go('s-q1-budget')">繼續 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2e: BUDGET ══ -->
+<div id="s-q1-budget" class="screen">
+  <nav>
+    <div class="logo">MM<span>.</span></div>
+    <div style="font-size:13px;color:var(--mid)">第 5 步，共 5 步</div>
+  </nav>
+  <div class="onboard-container">
+    <div class="step-bar">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+    </div>
+    <div class="q-label">Step 05 — 預算設定</div>
+    <h2 class="q-title">每月服裝預算</h2>
+    <p class="q-sub">AI會根據預算為你推薦最適合的選項</p>
+    <div class="budget-list">
+      <div class="budget-option" onclick="selectBudget(this)">
+        <div><div class="budget-label">HK$100 以下</div><div class="budget-desc">實惠精選 · 二手好貨</div></div>
+        <span>💰</span>
+      </div>
+      <div class="budget-option" onclick="selectBudget(this)">
+        <div><div class="budget-label">HK$100–500</div><div class="budget-desc">高性價比品牌</div></div>
+        <span>💰💰</span>
+      </div>
+      <div class="budget-option selected" onclick="selectBudget(this)">
+        <div><div class="budget-label">HK$500–1,000</div><div class="budget-desc">中端品牌 · UNIQLO等</div></div>
+        <span>💰💰💰</span>
+      </div>
+      <div class="budget-option" onclick="selectBudget(this)">
+        <div><div class="budget-label">HK$1,000–3,000</div><div class="budget-desc">輕奢品牌</div></div>
+        <span>💎</span>
+      </div>
+      <div class="budget-option" onclick="selectBudget(this)">
+        <div><div class="budget-label">HK$3,000–10,000</div><div class="budget-desc">設計師品牌</div></div>
+        <span>💎💎</span>
+      </div>
+      <div class="budget-option" onclick="selectBudget(this)">
+        <div><div class="budget-label">HK$10,000+</div><div class="budget-desc">奢侈品 · Dior · LV</div></div>
+        <span>👑</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-outline" onclick="go('s-q1-style')">← 返回</button>
+      <button class="btn-gold" style="flex:1" onclick="completeOnboarding()">生成我的風格DNA ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="s-main" class="screen">
+  <nav>
+    <div class="logo">MM<span>.</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab(this,'tab-today')" data-i18n="nav_today">今日</button>
+      <button class="nav-tab" onclick="switchTab(this,'tab-chat')" data-i18n="nav_chat">對話</button>
+      <button class="nav-tab" onclick="switchTab(this,'tab-wardrobe')" data-i18n="nav_wardrobe">衣櫥</button>
+      <button class="nav-tab" onclick="switchTab(this,'tab-map')" data-i18n="nav_map">地圖</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('zh')">中文</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+      <div class="theme-switcher" title="切換介面風格">
+        <button class="theme-btn active" onclick="setTheme('default',this)" title="Default" style="background:#F5F0E8;">☀️</button>
+        <button class="theme-btn" onclick="setTheme('tech',this)" title="Tech" style="background:#0E1117;color:#4FC3F7;">⚡</button>
+        <button class="theme-btn" onclick="setTheme('warm',this)" title="Warm" style="background:#FFF0E0;">🧡</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="profile-mini">
+        <div class="profile-name">✨ Style DNA</div>
+        <div class="profile-dna">Spring · X型身型 · 浪漫極簡混搭</div>
+      </div>
+      <div class="sidebar-section">主要功能</div>
+      <button class="sidebar-item active" onclick="switchSidebar(this,'tab-today')">
+        <span class="sidebar-icon">☀️</span> 今日配搭
+      </button>
+      <button class="sidebar-item" onclick="switchSidebar(this,'tab-chat')">
+        <span class="sidebar-icon">💬</span> AI造型對話
+      </button>
+      <button class="sidebar-item" onclick="switchSidebar(this,'tab-wardrobe')">
+        <span class="sidebar-icon">👗</span> 我的衣櫥
+      </button>
+      <button class="sidebar-item" onclick="switchSidebar(this,'tab-dna')">
+        <span class="sidebar-icon">🧬</span> 風格DNA
+      </button>
+      <div class="sidebar-section">更多功能</div>
+      <button class="sidebar-item" onclick="switchSidebar(this,'tab-map')">
+        <span class="sidebar-icon">🗺️</span> 附近店鋪
+      </button>
+      <button class="sidebar-item" onclick="switchSidebar(this,'tab-ar')">
+        <span class="sidebar-icon">🥽</span> AR試衣間
+      </button>
+      <button class="sidebar-item" onclick="switchSidebar(this,'tab-meta')">
+        <span class="sidebar-icon">🌐</span> 元宇宙
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="main-content">
+
+      <!-- TODAY TAB -->
+      <div id="tab-today" class="content-panel active">
+        <div class="weather-banner">
+          <div class="weather-info">
+            <div class="weather-icon">⛅</div>
+            <div>
+              <div class="weather-temp">22°C</div>
+              <div class="weather-desc">多雲 · 適合外出</div>
+            </div>
+          </div>
+          <div class="weather-occasion">📅 今日：Casual Friday</div>
+        </div>
+
+        <div class="daily-deal">
+          <div class="deal-badge">每日限定</div>
+          <div class="deal-info">
+            <div class="deal-item">UNIQLO 輕便羽絨背心 — 你的Spring型必備款</div>
+            <div class="deal-price">
+              <span class="deal-new">HK$299</span>
+              <span class="deal-old">HK$499</span>
+            </div>
+          </div>
+          <div class="deal-timer" id="deal-timer">23:14:32</div>
+        </div>
+
+        <div class="section-header">
+          <h2>今日3套配搭</h2>
+          <p>根據天氣·膚色·場合為你精選</p>
+        </div>
+
+        <div class="outfit-grid">
+          <div class="outfit-card featured" onclick="openRating()">
+            <div class="outfit-visual" style="background:#FBF3E8" id="ov1">
+              <div class="outfit-badge">AI首選</div>
+              <div class="outfit-clothes">🧥<br>👗<br>👟</div>
+            </div>
+            <div class="outfit-info">
+              <div class="outfit-name">Casual Romantic</div>
+              <div class="outfit-desc">奶油白針織外套 + 碎花裙 + 白波鞋</div>
+              <div class="outfit-score">
+                <span>配色</span>
+                <div class="score-bar"><div class="score-fill" style="width:92%"></div></div>
+                <span style="font-size:11px;color:var(--mid);white-space:nowrap">92分</span>
+              </div>
+            </div>
+            <div class="outfit-actions">
+              <button class="act-btn primary">選擇此配搭</button>
+              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)">購買連結 <span class="aff-badge">追蹤</span></button>
+            </div>
+          </div>
+
+          <div class="outfit-card" onclick="openRating()">
+            <div class="outfit-visual" style="background:#F0F0EE" id="ov2">
+              <div class="outfit-clothes">🧤<br>👔<br>🩷</div>
+            </div>
+            <div class="outfit-info">
+              <div class="outfit-name">Minimal Chic</div>
+              <div class="outfit-desc">灰色西裝外套 + 白Tee + 粉色闊腿褲</div>
+              <div class="outfit-score">
+                <span>配色</span>
+                <div class="score-bar"><div class="score-fill" style="width:87%"></div></div>
+                <span style="font-size:11px;color:var(--mid);white-space:nowrap">87分</span>
+              </div>
+            </div>
+            <div class="outfit-actions">
+              <button class="act-btn">選擇此配搭</button>
+              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)">購買連結 <span class="aff-badge">追蹤</span></button>
+            </div>
+          </div>
+
+          <div class="outfit-card" onclick="openRating()">
+            <div class="outfit-visual" style="background:#EEF2EE" id="ov3">
+              <div class="outfit-clothes">🧣<br>🟩<br>👜</div>
+            </div>
+            <div class="outfit-info">
+              <div class="outfit-name">Forest Vibe</div>
+              <div class="outfit-desc">橄欖綠針織 + 棕色皮褲 + 托特包</div>
+              <div class="outfit-score">
+                <span>配色</span>
+                <div class="score-bar"><div class="score-fill" style="width:83%"></div></div>
+                <span style="font-size:11px;color:var(--mid);white-space:nowrap">83分</span>
+              </div>
+            </div>
+            <div class="outfit-actions">
+              <button class="act-btn">選擇此配搭</button>
+              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)">購買連結 <span class="aff-badge">追蹤</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KOL / Stylist search bar for each recommendation -->
+        <div style="margin-bottom:24px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:10px">🔍 讓KOL / 造型師為你搜索配搭</div>
+          <div class="kol-search-wrap">
+            <span class="kol-search-icon">🔍</span>
+            <input class="kol-search-input" type="text" placeholder="搜索造型師、KOL、藝術家的版本…" oninput="searchKOL(this.value)">
+          </div>
+          <div class="kol-result-chips" id="kol-results">
+            <div class="kol-chip"><div class="kol-chip-avatar">👑</div>@fashionhk_queen</div>
+            <div class="kol-chip"><div class="kol-chip-avatar">📸</div>@stylist_coco</div>
+            <div class="kol-chip"><div class="kol-chip-avatar">🎨</div>@local_art_style</div>
+            <div class="kol-chip"><div class="kol-chip-avatar">🌿</div>@vintage_hk</div>
+          </div>
+          <div style="font-size:11px;color:var(--mid);margin-top:8px">KOL分享後，MM會收集數據並生成相似配搭供未來參考</div>
+        </div>
+
+        <!-- 5-dimension scoring panel -->
+        <div class="score-panel">
+          <div class="score-panel-title">今日配搭評分 — AI分析</div>
+          <div class="score-row">
+            <div class="score-row-label">配色適宜度</div>
+            <div class="score-row-bar"><div class="score-row-fill" style="width:92%"></div></div>
+            <div class="score-row-val">92</div>
+          </div>
+          <div class="score-row">
+            <div class="score-row-label">流行度</div>
+            <div class="score-row-bar"><div class="score-row-fill" style="width:85%"></div></div>
+            <div class="score-row-val">85</div>
+          </div>
+          <div class="score-row">
+            <div class="score-row-label">身型表現度</div>
+            <div class="score-row-bar"><div class="score-row-fill" style="width:88%"></div></div>
+            <div class="score-row-val">88</div>
+          </div>
+          <div class="score-row">
+            <div class="score-row-label">場合契合度</div>
+            <div class="score-row-bar"><div class="score-row-fill" style="width:90%"></div></div>
+            <div class="score-row-val">90</div>
+          </div>
+          <div class="score-row">
+            <div class="score-row-label">6:3:1配色比例</div>
+            <div class="score-row-bar"><div class="score-row-fill" style="width:95%"></div></div>
+            <div class="score-row-val">95</div>
+          </div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+            <div style="display:flex;gap:8px;align-items:center">
+              <div style="flex:6;height:10px;border-radius:4px;background:#F5F0E8;border:1px solid var(--border)"></div>
+              <div style="flex:3;height:10px;border-radius:4px;background:var(--gold)"></div>
+              <div style="flex:1;height:10px;border-radius:4px;background:var(--charcoal)"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:5px;font-size:10px;color:var(--mid)">
+              <span style="flex:6">60% 基調</span><span style="flex:3">30% 輔助</span><span style="flex:1;white-space:nowrap">10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAT TAB -->
+      <div id="tab-chat" class="content-panel">
+        <div class="section-header">
+          <h2>AI造型師對話</h2>
+          <p>隨時問我任何關於穿搭的問題</p>
+        </div>
+        <div class="tone-selector-mini">
+          <button class="tone-mini-btn active" onclick="setTone(this,'mean')">💅 Mean精版</button>
+          <button class="tone-mini-btn" onclick="setTone(this,'bestie')">🥂 閨蜜版</button>
+          <button class="tone-mini-btn" onclick="setTone(this,'pro')">👔 專業版</button>
+          <button class="tone-mini-btn" onclick="setTone(this,'kol')">📸 KOL版</button>
+        </div>
+        <div class="chat-container">
+          <div class="chat-messages" id="chat-messages">
+            <div class="msg ai">
+              <div class="msg-avatar">MM</div>
+              <div class="msg-bubble">噚日條裙係咁，今日？姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！今日幫你揀咗3套，都係warm + 輕柔tone，你話邊套最啱心水？😝</div>
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <textarea class="chat-input" id="chat-input" placeholder="問我任何穿搭問題… 例：下週面試著咩好？" rows="1" onkeydown="handleChatKey(event)"></textarea>
+            <button class="chat-send" onclick="sendChat()">↑</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- WARDROBE TAB -->
+      <div id="tab-wardrobe" class="content-panel">
+        <div class="section-header">
+          <h2>我的衣櫥</h2>
+          <p>32件單品 · AI已分類整理</p>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+          <button class="chip selected" onclick="this.classList.toggle('selected')">全部</button>
+          <button class="chip" onclick="this.classList.toggle('selected')">上衣</button>
+          <button class="chip" onclick="this.classList.toggle('selected')">外套</button>
+          <button class="chip" onclick="this.classList.toggle('selected')">裙/褲</button>
+          <button class="chip" onclick="this.classList.toggle('selected')">鞋履</button>
+          <button class="chip" onclick="this.classList.toggle('selected')">配飾</button>
+          <button class="chip" onclick="this.classList.toggle('selected')">古著</button>
+        </div>
+        <div class="wardrobe-grid">
+          <div class="add-wardrobe"><div class="plus">+</div><div>上傳衣物</div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#FBF3E8">🧥</div><div class="wardrobe-meta"><div class="wardrobe-type">針織外套</div><div class="wardrobe-color">奶油白</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F5E8F0">👗</div><div class="wardrobe-meta"><div class="wardrobe-type">碎花裙</div><div class="wardrobe-color">粉底花紋</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#EEF2EE">🧣</div><div class="wardrobe-meta"><div class="wardrobe-type">圍巾</div><div class="wardrobe-color">橄欖綠</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F0F0EE">👔</div><div class="wardrobe-meta"><div class="wardrobe-type">西裝外套</div><div class="wardrobe-color">灰色</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#FFF8EC">👟</div><div class="wardrobe-meta"><div class="wardrobe-type">波鞋</div><div class="wardrobe-color">白色</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F5E8E8">👜</div><div class="wardrobe-meta"><div class="wardrobe-type">托特包</div><div class="wardrobe-color">棕色</div></div></div>
+          <div class="wardrobe-item" style="border:1.5px dashed #C9A84C"><div class="wardrobe-thumb" style="background:#FBF7EF">🛍️</div><div class="wardrobe-meta"><div class="wardrobe-type" style="color:var(--gold)">缺少：中性風褸</div><div class="wardrobe-color">AI建議補充</div></div></div>
+        </div>
+      </div>
+
+      <!-- DNA TAB -->
+      <div id="tab-dna" class="content-panel">
+        <div class="section-header"><h2>我的風格DNA</h2><p>AI分析你的穿搭個性</p></div>
+        <div class="dna-card">
+          <div class="dna-title">Spring × Romantic-Minimal</div>
+          <div class="dna-tags">
+            <span class="dna-tag primary">Spring暖色型</span>
+            <span class="dna-tag">X型身型</span>
+            <span class="dna-tag">浪漫極簡混搭</span>
+            <span class="dna-tag">INFJ</span>
+            <span class="dna-tag">Buy less, choose well</span>
+          </div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-val">92%</div><div class="stat-label">配色適宜度</div></div>
+          <div class="stat-card"><div class="stat-val">87%</div><div class="stat-label">身型表現度</div></div>
+          <div class="stat-card"><div class="stat-val">32</div><div class="stat-label">衣物件數</div></div>
+        </div>
+        <div style="background:var(--cream);border-radius:12px;padding:18px;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:500;margin-bottom:12px">滿意度調查</div>
+          <div style="font-size:13px;color:var(--mid);margin-bottom:8px">AI幫你解決日常搭配的煩惱嗎？</div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-outline" style="padding:8px 20px;font-size:13px">😐 一般</button>
+            <button class="btn-primary" style="padding:8px 20px;font-size:13px">😍 很滿意</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAP TAB -->
+      <div id="tab-map" class="content-panel">
+        <div class="section-header"><h2>附近店鋪</h2><p>即刻去買，唔使等快遞</p></div>
+        <div class="map-placeholder">
+          <div class="map-grid"></div>
+          <div style="position:relative;text-align:center">
+            <div class="map-pin" style="position:absolute;left:-60px;top:-20px">
+              📍<span class="map-pin-label">UNIQLO</span>
+            </div>
+            <div class="map-pin">📍<span class="map-pin-label">你在這</span></div>
+            <div class="map-pin" style="position:absolute;right:-80px;top:20px">
+              📍<span class="map-pin-label">ZARA</span>
+            </div>
+          </div>
+        </div>
+        <div class="shop-list">
+          <div class="shop-item"><div class="shop-icon">🏪</div><div><div class="shop-name">UNIQLO 銅鑼灣</div><div class="shop-info">備貨充足 · 你的AI推薦款有貨</div></div><div class="shop-dist">280m</div></div>
+          <div class="shop-item"><div class="shop-icon">✂️</div><div><div class="shop-name">Vintage Corner</div><div class="shop-info">小眾古著店 · 全店已掃描入庫</div></div><div class="shop-dist">450m</div></div>
+          <div class="shop-item"><div class="shop-icon">👑</div><div><div class="shop-name">ZARA 時代廣場</div><div class="shop-info">本季新款 · KOL合作款</div></div><div class="shop-dist">720m</div></div>
+          <div class="shop-item"><div class="shop-icon">🎨</div><div><div class="shop-name">本地設計師 Popup</div><div class="shop-info">HK本地品牌 · 獨家聯名</div></div><div class="shop-dist">1.1km</div></div>
+        </div>
+      </div>
+
+      <!-- AR TAB -->
+      <div id="tab-ar" class="content-panel">
+        <div class="section-header"><h2>AR虛擬試衣間</h2><p>Q4 即將推出</p></div>
+        <div class="ar-container">
+          <div class="ar-icon">🥽</div>
+          <div class="ar-title">VR Closet — 虛擬衣櫥</div>
+          <div class="ar-sub">用AR試穿任何衣物，不需要實體試衣室<br>Freemium · 基礎功能免費</div>
+          <button class="btn-gold">加入等候名單</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+          <div style="padding:18px;border:1px solid var(--border);border-radius:12px;text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">📱</div>
+            <div style="font-size:14px;font-weight:500">手機AR試穿</div>
+            <div style="font-size:12px;color:var(--mid)">鏡頭即時試衣</div>
+          </div>
+          <div style="padding:18px;border:1px solid var(--border);border-radius:12px;text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">🖼️</div>
+            <div style="font-size:14px;font-weight:500">AI換裝生成</div>
+            <div style="font-size:12px;color:var(--mid)">上傳照片即換衣</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- METAVERSE TAB -->
+      <div id="tab-meta" class="content-panel">
+        <div class="section-header"><h2>元宇宙時尚社區</h2><p>Q5 概念 — 「我看到我穿到」</p></div>
+        <div class="meta-container">
+          <div class="meta-icon">🌐</div>
+          <div class="meta-title">穿上你喜歡的衣服，結交朋友</div>
+          <div class="meta-sub">Upload真實樣子，AI塑造理想身體，配搭你夢想的時裝</div>
+          <div class="meta-features">
+            <span class="meta-feat">👥 朋友交流區</span>
+            <span class="meta-feat">💎 VIP解鎖更多配搭</span>
+            <span class="meta-feat">👑 名牌虛擬試穿</span>
+            <span class="meta-feat">🎮 時尚遊戲化</span>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:8px">登記搶先體驗</button>
+      </div>
+
+    </div><!-- end main-content -->
+  </div><!-- end main-layout -->
+</div><!-- end s-main -->
+
+<!-- Rating Modal -->
+<div class="modal-overlay" id="rating-modal">
+  <div class="modal">
+    <div class="modal-title">評價今日配搭</div>
+    <div class="modal-sub">你的評分幫助AI越來越了解你 💛（滿意度調查 · 每次必填）</div>
+    <div class="rating-row">
+      <div class="rating-label"><span>顏色</span></div>
+      <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
+    </div>
+    <div class="rating-row">
+      <div class="rating-label"><span>款式 / 版型</span></div>
+      <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
+    </div>
+    <div class="rating-row">
+      <div class="rating-label"><span>品牌 / 風格</span></div>
+      <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
+    </div>
+    <div class="rating-row">
+      <div class="rating-label"><span>價格接受度</span></div>
+      <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
+    </div>
+    <div class="rating-row">
+      <div class="rating-label"><span>材質</span></div>
+      <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
+    </div>
+    <div class="rating-row" style="margin-top:12px">
+      <div class="rating-label" style="font-weight:600">會否購買？</div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="chip" onclick="this.classList.toggle('selected')">會買 ✓</button>
+        <button class="chip" onclick="this.classList.toggle('selected')">也許</button>
+        <button class="chip" onclick="this.classList.toggle('selected')">不會</button>
+      </div>
+    </div>
+    <div style="background:var(--cream);border-radius:10px;padding:12px;margin-top:14px;font-size:12px;color:var(--mid)">
+      MM解決你日常搭配的煩惱嗎？
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="chip" onclick="this.classList.toggle('selected')">😍 非常有幫助</button>
+        <button class="chip" onclick="this.classList.toggle('selected')">😐 一般</button>
+        <button class="chip" onclick="this.classList.toggle('selected')">😕 未夠好</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal()">跳過</button>
+      <button class="btn-primary" style="flex:1" onclick="submitRating()">提交評分 →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Navigation
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// Tab switching
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  switchPanel(panelId);
+}
+function switchSidebar(btn, panelId) {
+  document.querySelectorAll('.sidebar-item').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  switchPanel(panelId);
+}
+function switchPanel(id) {
+  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(id);
+  if (panel) panel.classList.add('active');
+}
+
+// Onboarding selectors
+function selectTone(el, tone) {
+  el.closest('.tone-grid').querySelectorAll('.tone-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectSeason(el) {
+  el.closest('.season-grid').querySelectorAll('.season-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectBudget(el) {
+  el.closest('.budget-list').querySelectorAll('.budget-option').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectCdepth(el) {
+  el.closest('.colour-depth-row').querySelectorAll('.cdepth-option').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ══════════════════════════════════════
+// i18n — bilingual dictionary
+// ══════════════════════════════════════
+const i18n = {
+  zh: {
+    // Landing
+    landing_tag: 'Q1 2026 推出 · Freemium',
+    landing_h1: 'Your AI<br><em>Style BFF</em>',
+    landing_sub: '四季膚色分析 · 智能穿搭 · AR虛擬試衣 · 元宇宙時尚社區',
+    feat_q1: '🌸 Q1 膚色體型分析',
+    feat_q2: '👗 Q2 智能衣物配搭',
+    feat_q3: '🏪 Q3 品牌KOL合作',
+    feat_q4: '🥽 Q4 AR試衣間',
+    feat_q5: '🌐 Q5 元宇宙',
+    landing_cta_start: '開始我的風格之旅 ✦',
+    landing_cta_enter: '直接進入 App →',
+    // Nav
+    nav_today: '今日', nav_chat: '對話', nav_wardrobe: '衣櫥', nav_map: '地圖',
+    // Sidebar
+    sb_main: '主要功能', sb_today: '今日配搭', sb_chat: 'AI造型對話',
+    sb_wardrobe: '我的衣櫥', sb_dna: '風格DNA', sb_more: '更多功能',
+    sb_map: '附近店鋪', sb_ar: 'AR試衣間', sb_meta: '元宇宙',
+    // Onboarding step labels
+    step_of: '步，共 5 步', step_pre: '第 ',
+    tone_label: 'Step 01 — 選擇你的Stylist風格',
+    tone_title: '你想要哪種造型師？',
+    tone_sub: '不同風格的AI造型師為你提供個性化建議',
+    tone_next: '繼續 →', tone_back: '← 返回',
+    body_label: 'Step 02 — 上傳照片 + 身體數據',
+    body_title: '讓我了解你的身型',
+    body_sub: '上傳全身照，AI會分析你的身型比例。所有數據嚴格保密。',
+    upload_title: '上傳全身照 / 半身照',
+    upload_hint: '支援 JPG、PNG · 建議在自然光下拍攝',
+    height_label: '身高 (cm)', weight_label: '體重 (kg)',
+    bust_label: '胸圍 (cm) — 選填', waist_label: '腰圍 (cm) — 選填',
+    body_hint: 'AI分析身型：X型 / O型 / H型 / A型 / V型 · 數據同步亞洲/歐美趨勢庫',
+    season_label: 'Step 03 — 16型四季膚色分析',
+    season_title: '你是哪個季節型？',
+    season_sub: '根據膚色、髮色、眼色判斷最適合你的色彩家族',
+    palette_label: '🌸 Spring 型推薦配色',
+    palette_hint: '你的專屬色板',
+    style_label: 'Step 04 — 風格偏好 + 品牌哲學',
+    style_title: '你的穿衣風格',
+    style_sub: '可以選多個',
+    motto_label: '品牌哲學 — 用 Motto 代替品牌名做混搭',
+    vintage_label_main: '🎞️ 包含古著 / 二手衣物',
+    vintage_label_sub: '博物館 · Vintage Shop · 二手平台',
+    cdepth_label: '顏色深淺偏好',
+    tag_label: '個性標籤 — MBTI / 星座 / 生肖',
+    budget_label: 'Step 05 — 預算設定',
+    budget_title: '每月服裝預算',
+    budget_sub: 'AI會根據預算為你推薦最適合的選項',
+    budget_cta: '生成我的風格DNA ✦',
+    // Today tab
+    today_h2: '今日3套配搭',
+    today_sub: '根據天氣·膚色·場合為你精選',
+    weather_desc: '多雲 · 適合外出', occasion: '今日：Casual Friday',
+    deal_badge: '每日限定',
+    deal_item: 'UNIQLO 輕便羽絨背心 — 你的Spring型必備款',
+    outfit_select: '選擇此配搭', outfit_buy: '購買連結',
+    badge_ai: 'AI首選',
+    outfit1_name: 'Casual Romantic', outfit1_desc: '奶油白針織外套 + 碎花裙 + 白波鞋',
+    outfit2_name: 'Minimal Chic', outfit2_desc: '灰色西裝外套 + 白Tee + 粉色闊腿褲',
+    outfit3_name: 'Forest Vibe', outfit3_desc: '橄欖綠針織 + 棕色皮褲 + 托特包',
+    kol_heading: '🔍 讓KOL / 造型師為你搜索配搭',
+    kol_placeholder: '搜索造型師、KOL、藝術家的版本…',
+    kol_hint: 'KOL分享後，MM會收集數據並生成相似配搭供未來參考',
+    score_title: '今日配搭評分 — AI分析',
+    score_colour: '配色適宜度', score_trend: '流行度', score_body: '身型表現度',
+    score_occasion: '場合契合度', score_ratio: '6:3:1配色比例',
+    ratio_base: '60% 基調', ratio_accent: '30% 輔助',
+    // Chat tab
+    chat_h2: 'AI造型師對話', chat_sub: '隨時問我任何關於穿搭的問題',
+    chat_placeholder: '問我任何穿搭問題… 例：下週面試著咩好？',
+    chat_greeting: '噚日條裙係咁，今日？姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！今日幫你揀咗3套，你話邊套最啱心水？😝',
+    // Wardrobe tab
+    ward_h2: '我的衣櫥', ward_sub: '32件單品 · AI已分類整理',
+    ward_all: '全部', ward_top: '上衣', ward_outer: '外套',
+    ward_bottom: '裙/褲', ward_shoes: '鞋履', ward_acc: '配飾', ward_vintage: '古著',
+    ward_upload: '上傳衣物', ward_gap: 'AI建議補充',
+    // DNA tab
+    dna_h2: '我的風格DNA', dna_sub: 'AI分析你的穿搭個性',
+    dna_title: 'Spring × Romantic-Minimal',
+    stat_colour: '配色適宜度', stat_body: '身型表現度', stat_count: '衣物件數',
+    sat_title: '滿意度調查',
+    sat_q: 'AI幫你解決日常搭配的煩惱嗎？',
+    sat_ok: '😐 一般', sat_good: '😍 很滿意',
+    // Map tab
+    map_h2: '附近店鋪', map_sub: '即刻去買，唔使等快遞',
+    you_here: '你在這',
+    // AR tab
+    ar_h2: 'AR虛擬試衣間', ar_coming: 'Q4 即將推出',
+    ar_title: 'VR Closet — 虛擬衣櫥',
+    ar_sub: '用AR試穿任何衣物，不需要實體試衣室\nFreemium · 基礎功能免費',
+    ar_join: '加入等候名單',
+    ar_cam: '手機AR試穿', ar_cam_sub: '鏡頭即時試衣',
+    ar_ai: 'AI換裝生成', ar_ai_sub: '上傳照片即換衣',
+    // Meta tab
+    meta_h2: '元宇宙時尚社區', meta_coming: 'Q5 概念 — 「我看到我穿到」',
+    meta_title: '穿上你喜歡的衣服，結交朋友',
+    meta_sub: 'Upload真實樣子，AI塑造理想身體，配搭你夢想的時裝',
+    meta_join: '登記搶先體驗',
+    // Rating modal
+    rating_title: '評價今日配搭',
+    rating_sub: '你的評分幫助AI越來越了解你 💛（滿意度調查 · 每次必填）',
+    r_colour: '顏色', r_style: '款式 / 版型', r_brand: '品牌 / 風格',
+    r_price: '價格接受度', r_material: '材質',
+    r_buy_q: '會否購買？', r_yes: '會買 ✓', r_maybe: '也許', r_no: '不會',
+    r_mm_q: 'MM解決你日常搭配的煩惱嗎？',
+    r_great: '😍 非常有幫助', r_ok: '😐 一般', r_bad: '😕 未夠好',
+    r_skip: '跳過', r_submit: '提交評分 →',
+    // Affiliate toast
+    aff_toast: '🔗 購買連結已複製 · 你的購買數據將被記錄',
+    // Upload states
+    upload_loading: 'AI分析中…', upload_hint2: '識別身型：X型 · 膚色：Spring暖色',
+    upload_done: '分析完成！X型身型 · Spring膚色', upload_retry: '點擊重新上傳',
+    // Theme title
+    theme_default: '默認', theme_tech: '未來科技', theme_warm: '溫暖專業',
+  },
+
+  en: {
+    // Landing
+    landing_tag: 'Launching Q1 2026 · Freemium',
+    landing_h1: 'Your AI<br><em>Style BFF</em>',
+    landing_sub: 'Season Colour Analysis · Smart Outfits · AR Try-On · Metaverse Fashion',
+    feat_q1: '🌸 Q1 Colour & Body Analysis',
+    feat_q2: '👗 Q2 Smart Outfit Matching',
+    feat_q3: '🏪 Q3 Brand & KOL Collabs',
+    feat_q4: '🥽 Q4 AR Fitting Room',
+    feat_q5: '🌐 Q5 Metaverse',
+    landing_cta_start: 'Start My Style Journey ✦',
+    landing_cta_enter: 'Enter App →',
+    // Nav
+    nav_today: 'Today', nav_chat: 'Chat', nav_wardrobe: 'Wardrobe', nav_map: 'Map',
+    // Sidebar
+    sb_main: 'Main', sb_today: 'Today\'s Outfits', sb_chat: 'AI Stylist Chat',
+    sb_wardrobe: 'My Wardrobe', sb_dna: 'Style DNA', sb_more: 'More',
+    sb_map: 'Nearby Shops', sb_ar: 'AR Fitting Room', sb_meta: 'Metaverse',
+    // Onboarding
+    step_of: ' of 5', step_pre: 'Step ',
+    tone_label: 'Step 01 — Choose Your Stylist Vibe',
+    tone_title: 'What kind of AI stylist do you want?',
+    tone_sub: 'Each tone gives you a different style of personalised advice',
+    tone_next: 'Continue →', tone_back: '← Back',
+    body_label: 'Step 02 — Upload Photo + Body Data',
+    body_title: 'Let me understand your body shape',
+    body_sub: 'Upload a full-body photo. AI will analyse your proportions. All data is strictly private.',
+    upload_title: 'Upload Full Body / Half Body Photo',
+    upload_hint: 'JPG or PNG · Natural light recommended',
+    height_label: 'Height (cm)', weight_label: 'Weight (kg)',
+    bust_label: 'Bust (cm) — Optional', waist_label: 'Waist (cm) — Optional',
+    body_hint: 'AI analyses body shape: X / O / H / A / V type · Synced with Asian & Western trend data',
+    season_label: 'Step 03 — 16-Type Season Colour Analysis',
+    season_title: 'Which season type are you?',
+    season_sub: 'Based on your skin tone, hair and eye colour',
+    palette_label: '🌸 Spring Type Recommended Palette',
+    palette_hint: 'Your personal colour palette',
+    style_label: 'Step 04 — Style Preferences + Brand Philosophy',
+    style_title: 'Your dressing style',
+    style_sub: 'Select all that apply',
+    motto_label: 'Brand Philosophy — Mix & match by motto, not brand name',
+    vintage_label_main: '🎞️ Include Vintage / Second-hand',
+    vintage_label_sub: 'Museums · Vintage Shops · Resale Platforms',
+    cdepth_label: 'Colour Depth Preference',
+    tag_label: 'Personality Tags — MBTI / Zodiac / Chinese Zodiac',
+    budget_label: 'Step 05 — Budget',
+    budget_title: 'Monthly clothing budget',
+    budget_sub: 'AI will recommend options that fit your budget',
+    budget_cta: 'Generate My Style DNA ✦',
+    // Today
+    today_h2: 'Today\'s 3 Outfits',
+    today_sub: 'Curated for your weather · skin tone · occasion',
+    weather_desc: 'Cloudy · Great day to go out', occasion: 'Today: Casual Friday',
+    deal_badge: 'Daily Deal',
+    deal_item: 'UNIQLO Light Down Vest — Essential for your Spring type',
+    outfit_select: 'Choose this look', outfit_buy: 'Buy Link',
+    badge_ai: 'AI Pick',
+    outfit1_name: 'Casual Romantic', outfit1_desc: 'Cream knit jacket + floral skirt + white sneakers',
+    outfit2_name: 'Minimal Chic', outfit2_desc: 'Grey blazer + white tee + pink wide-leg trousers',
+    outfit3_name: 'Forest Vibe', outfit3_desc: 'Olive knit + brown leather trousers + tote bag',
+    kol_heading: '🔍 Let a KOL / Stylist curate your look',
+    kol_placeholder: 'Search stylists, KOLs, artists…',
+    kol_hint: 'After a KOL shares, MM collects data to generate similar looks in future',
+    score_title: 'Today\'s Outfit Score — AI Analysis',
+    score_colour: 'Colour suitability', score_trend: 'Trend score', score_body: 'Body flattery',
+    score_occasion: 'Occasion fit', score_ratio: '6:3:1 colour ratio',
+    ratio_base: '60% Base', ratio_accent: '30% Accent',
+    // Chat
+    chat_h2: 'AI Stylist Chat', chat_sub: 'Ask me anything about outfits, anytime',
+    chat_placeholder: 'Ask anything… e.g. What should I wear to an interview?',
+    chat_greeting: 'Hey gorgeous! You\'re a Spring type — warm tones are your best friend. I\'ve picked 3 looks for you today. Which one speaks to you? 😝',
+    // Wardrobe
+    ward_h2: 'My Wardrobe', ward_sub: '32 items · AI organised',
+    ward_all: 'All', ward_top: 'Tops', ward_outer: 'Outerwear',
+    ward_bottom: 'Skirts/Trousers', ward_shoes: 'Shoes', ward_acc: 'Accessories', ward_vintage: 'Vintage',
+    ward_upload: 'Upload Item', ward_gap: 'AI suggests adding',
+    // DNA
+    dna_h2: 'My Style DNA', dna_sub: 'AI analysis of your fashion personality',
+    dna_title: 'Spring × Romantic-Minimal',
+    stat_colour: 'Colour score', stat_body: 'Body flattery', stat_count: 'Items',
+    sat_title: 'Satisfaction Survey',
+    sat_q: 'Does MM solve your daily outfit struggles?',
+    sat_ok: '😐 So-so', sat_good: '😍 Love it',
+    // Map
+    map_h2: 'Nearby Shops', map_sub: 'Buy it now, skip the delivery wait',
+    you_here: 'You are here',
+    // AR
+    ar_h2: 'AR Fitting Room', ar_coming: 'Coming Q4',
+    ar_title: 'VR Closet — Virtual Wardrobe',
+    ar_sub: 'Try on anything virtually — no physical fitting room needed\nFreemium · Basic features free',
+    ar_join: 'Join Waitlist',
+    ar_cam: 'Phone AR Try-On', ar_cam_sub: 'Live camera fitting',
+    ar_ai: 'AI Outfit Swap', ar_ai_sub: 'Upload photo, swap outfit',
+    // Meta
+    meta_h2: 'Metaverse Fashion Community', meta_coming: 'Q5 Concept — "See it, Wear it"',
+    meta_title: 'Dress how you want. Make friends.',
+    meta_sub: 'Upload your real look. AI sculpts your ideal body. Style it with your dream wardrobe.',
+    meta_join: 'Register for Early Access',
+    // Rating
+    rating_title: 'Rate Today\'s Outfit',
+    rating_sub: 'Your ratings help AI understand you better 💛',
+    r_colour: 'Colour', r_style: 'Style / Cut', r_brand: 'Brand / Vibe',
+    r_price: 'Price acceptability', r_material: 'Material',
+    r_buy_q: 'Would you buy it?', r_yes: 'Yes ✓', r_maybe: 'Maybe', r_no: 'No',
+    r_mm_q: 'Does MM solve your daily outfit struggles?',
+    r_great: '😍 Very helpful', r_ok: '😐 So-so', r_bad: '😕 Needs work',
+    r_skip: 'Skip', r_submit: 'Submit Rating →',
+    // Affiliate
+    aff_toast: '🔗 Link copied · Your purchase data will be recorded',
+    // Upload states
+    upload_loading: 'AI analysing…', upload_hint2: 'Detecting: X-shape body · Spring skin tone',
+    upload_done: 'Analysis complete! X-shape · Spring tone', upload_retry: 'Tap to re-upload',
+    // Theme
+    theme_default: 'Default', theme_tech: 'Tech / Future', theme_warm: 'Warm / Pro',
+  }
+};
+
+let currentLang = 'zh';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('html-root').lang = lang === 'zh' ? 'zh-HK' : 'en';
+  // Update all lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', (btn.textContent.trim() === '中文' && lang === 'zh') || (btn.textContent.trim() === 'EN' && lang === 'en'));
+  });
+  // Translate all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = i18n[lang][key];
+    if (val !== undefined) el.innerHTML = val;
+  });
+  // Update dynamic chat greeting
+  const firstBubble = document.querySelector('#chat-messages .msg.ai .msg-bubble');
+  if (firstBubble) firstBubble.textContent = i18n[lang].chat_greeting;
+  // Update placeholder
+  const chatInput = document.getElementById('chat-input');
+  if (chatInput) chatInput.placeholder = i18n[lang].chat_placeholder;
+  // Update KOL search placeholder
+  const kolInput = document.querySelector('.kol-search-input');
+  if (kolInput) kolInput.placeholder = i18n[lang].kol_placeholder;
+}
+
+// Navigation
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  switchPanel(panelId);
+}
+function switchSidebar(btn, panelId) {
+  document.querySelectorAll('.sidebar-item').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  switchPanel(panelId);
+}
+function switchPanel(id) {
+  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(id);
+  if (panel) panel.classList.add('active');
+}
+
+function selectTone(el, tone) {
+  el.closest('.tone-grid').querySelectorAll('.tone-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectSeason(el) {
+  el.closest('.season-grid').querySelectorAll('.season-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectBudget(el) {
+  el.closest('.budget-list').querySelectorAll('.budget-option').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectCdepth(el) {
+  el.closest('.colour-depth-row').querySelectorAll('.cdepth-option').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function setTheme(theme, btn) {
+  document.body.classList.remove('theme-tech','theme-warm');
+  if (theme !== 'default') document.body.classList.add('theme-' + theme);
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function applyWeatherMood() {
+  const hr = new Date().getHours();
+  const body = document.body;
+  if (hr >= 17 || hr < 7) {
+    body.classList.add('weather-rain');
+    body.classList.remove('weather-sunny');
+    ['ov1','ov2','ov3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.filter = 'brightness(0.92) saturate(0.8)';
+    });
+    const wb = document.getElementById('mood-bar');
+    if (wb) wb.style.background = 'linear-gradient(90deg,#6080A0,#8090B0,#9AAAC0)';
+  } else {
+    body.classList.add('weather-sunny');
+    body.classList.remove('weather-rain');
+    const wb = document.getElementById('mood-bar');
+    if (wb) wb.style.background = 'linear-gradient(90deg,#FFD54F,#FFB300,#FF8F00)';
+  }
+}
+applyWeatherMood();
+
+const kolData = [
+  {handle:'@fashionhk_queen', icon:'👑'},{handle:'@stylist_coco', icon:'📸'},
+  {handle:'@local_art_style', icon:'🎨'},{handle:'@vintage_hk', icon:'🎞️'},
+  {handle:'@minimal.hk', icon:'◽'},{handle:'@cottage_core_hk', icon:'🌿'},
+  {handle:'@kol_paris_chic', icon:'🗼'},{handle:'@ootd_museum', icon:'🏛️'},
+];
+function searchKOL(val) {
+  const container = document.getElementById('kol-results');
+  if (!container) return;
+  const filtered = val.trim() === '' ? kolData.slice(0,4) : kolData.filter(k => k.handle.includes(val.toLowerCase()));
+  container.innerHTML = filtered.map(k =>
+    `<div class="kol-chip"><div class="kol-chip-avatar">${k.icon}</div>${k.handle}</div>`
+  ).join('');
+}
+
+function showAffLink(btn) {
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--cream);padding:12px 20px;border-radius:50px;font-size:13px;z-index:9000;white-space:nowrap;animation:fadeIn 0.2s ease';
+  toast.textContent = i18n[currentLang].aff_toast;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function simulateUpload(el) {
+  const L = i18n[currentLang];
+  el.innerHTML = `<div class="upload-icon loading">⏳</div><div class="upload-title">${L.upload_loading}</div><div class="upload-hint">${L.upload_hint2}</div>`;
+  el.style.borderColor = 'var(--gold)';
+  setTimeout(() => {
+    el.innerHTML = `<div class="upload-icon">✅</div><div class="upload-title">${L.upload_done}</div><div class="upload-hint">${L.upload_retry}</div>`;
+    el.style.background = '#F0FAF0';
+  }, 2000);
+}
+
+function completeOnboarding() { go('s-main'); }
+
+const toneMessages = {
+  zh: {
+    mean: ['姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！', '你今朝問面試著咩？照返舊例warm neutral就最穩陣，唔好突然整個紫色或者黑色出來嚇人囉 😅', 'Ok listen，你個衣櫥欠咗一件decent中性外套，有咗佢就萬能配啦！'],
+    bestie: ['靚女！你係Spring型呀，暖色系完全係你嘅天下～今日幫你搭咗3套，你最鍾意邊個呀？', '面試？緊係選清爽款啦！奶油白或粉色都好合適你膚色！✨'],
+    pro: ['根據您的Spring色彩分析，建議以warm tone為主，搭配60:30:10色彩比例。今日三套配搭均符合您的身型及場合需求。'],
+    kol: ['OMG你係Spring型！！最近超流行warm aesthetic，你真係天生適合！今天這套超出片的！🔥📸'],
+    parisian: ['Chérie, warm tones only — c\'est votre saison. Moins c\'est plus. 🗼'],
+    vintage: ['你個Spring型配古著好正！試吓70年代的warm earth tone，係一種態度。🎞️'],
+  },
+  en: {
+    mean: ['Honey, you\'re a Spring type — PLEASE stop wearing black! Warm tones are literally made for you 💅', 'Interview outfit? Stick to warm neutrals. Don\'t scare anyone with something drastic 😅', 'Your wardrobe is desperately missing a decent neutral jacket. That\'s the gap, fix it!'],
+    bestie: ['You\'re a Spring type babe — warm colours are literally your superpower! Which of today\'s 3 looks do you love? ✨', 'Interview? Go clean and fresh! Cream or blush will complement your skin tone beautifully 🌸'],
+    pro: ['Based on your Spring colour analysis, warm tones with a 60:30:10 ratio are recommended. Today\'s three outfits all suit your body shape and occasion.'],
+    kol: ['OMG you\'re Spring type?! Warm aesthetics are SO trending right now, you were literally made for this 🔥📸'],
+    parisian: ['Chérie, warm tones only — c\'est votre saison. Less is always more. 🗼'],
+    vintage: ['Your Spring type pairs beautifully with vintage! Try 70s warm earth tones — it\'s a whole mood. 🎞️'],
+  }
+};
+let currentTone = 'mean';
+
+function setTone(btn, tone) {
+  document.querySelectorAll('.tone-mini-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTone = tone;
+}
+
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const container = document.getElementById('chat-messages');
+  const userDiv = document.createElement('div');
+  userDiv.className = 'msg user';
+  userDiv.innerHTML = `<div class="msg-bubble">${msg}</div>`;
+  container.appendChild(userDiv);
+  input.value = '';
+  const typing = document.createElement('div');
+  typing.className = 'msg ai';
+  typing.innerHTML = '<div class="msg-avatar">MM</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  container.appendChild(typing);
+  container.scrollTop = container.scrollHeight;
+  setTimeout(() => {
+    const replies = (toneMessages[currentLang] || toneMessages.zh)[currentTone] || toneMessages.zh.mean;
+    const reply = replies[Math.floor(Math.random() * replies.length)];
+    typing.querySelector('.typing-indicator').outerHTML = `<div class="msg-bubble">${reply}</div>`;
+    container.scrollTop = container.scrollHeight;
+  }, 1200);
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+}
+
+function openRating() { document.getElementById('rating-modal').classList.add('open'); }
+function closeModal() { document.getElementById('rating-modal').classList.remove('open'); }
+function rateStar(star) {
+  const group = star.closest('.stars');
+  const stars = group.querySelectorAll('.star');
+  const idx = Array.from(stars).indexOf(star);
+  stars.forEach((s, i) => s.classList.toggle('lit', i <= idx));
+}
+function submitRating() { closeModal(); }
+
+function updateTimer() {
+  const el = document.getElementById('deal-timer');
+  if (!el) return;
+  const now = new Date();
+  const midnight = new Date(now); midnight.setHours(23,59,59,0);
+  const diff = midnight - now;
+  const h = String(Math.floor(diff/3600000)).padStart(2,'0');
+  const m = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  const s = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  el.textContent = `${h}:${m}:${s}`;
+}
+setInterval(updateTimer, 1000);
+updateTimer();
+
+// Simulate upload
+function simulateUpload(el) {
+  el.innerHTML = '<div class="upload-icon loading">⏳</div><div class="upload-title">AI分析中…</div><div class="upload-hint">識別身型：X型 · 膚色：Spring暖色</div>';
+  el.style.borderColor = 'var(--gold)';
+  setTimeout(() => {
+    el.innerHTML = '<div class="upload-icon">✅</div><div class="upload-title">分析完成！X型身型 · Spring膚色</div><div class="upload-hint">點擊重新上傳</div>';
+    el.style.background = '#F0FAF0';
+  }, 2000);
+}
+</script>
+</body>
+</html>
