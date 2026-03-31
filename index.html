@@ -746,7 +746,6 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
   position: absolute; top: 24px; right: 28px;
 }
 </style>
-</head>
 <body>
 
 <!-- WEATHER MOOD BAR -->
@@ -754,14 +753,13 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
 
 <!-- ══ SCREEN 1: LANDING ══ -->
 <div id="s-landing" class="screen active">
-  <!-- Language switcher -->
   <div class="landing-lang">
     <div class="lang-switcher">
       <button class="lang-btn active" onclick="setLang('zh')">中文</button>
       <button class="lang-btn" onclick="setLang('en')">EN</button>
     </div>
   </div>
-  <div class="landing-tag" data-i18n="landing_tag">Launching Q1 2026 · Freemium</div>
+  <div class="landing-tag" data-i18n="landing_tag">Q1 2026 推出 · Freemium</div>
   <h1 class="landing-h1" data-i18n="landing_h1">Your AI<br><em>Style BFF</em></h1>
   <p class="landing-sub" data-i18n="landing_sub">四季膚色分析 · 智能穿搭 · AR虛擬試衣 · 元宇宙時尚社區</p>
   <div class="landing-features">
@@ -772,195 +770,199 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
     <span class="feat-pill" data-i18n="feat_q5">🌐 Q5 元宇宙</span>
   </div>
   <div class="landing-cta">
-    <button class="btn-gold" onclick="go('s-q1-tone')" data-i18n="landing_cta_start">開始我的風格之旅 ✦</button>
-    <button class="btn-outline" style="color:var(--cream);border-color:rgba(245,240,232,0.4)" onclick="go('s-main')" data-i18n="landing_cta_enter">直接進入 App →</button>
+    <button class="btn-gold" onclick="go('s-q1-tone')" data-i18n="cta_start">開始我的風格之旅 ✦</button>
+    <button class="btn-outline" style="color:var(--cream);border-color:rgba(245,240,232,0.4)" onclick="go('s-main')" data-i18n="cta_enter">直接進入 App →</button>
   </div>
 </div>
 
-<!-- ══ SCREEN 2a: Q1 — TONE ══ -->
+<!-- ══ SCREEN 2a: TONE ══ -->
 <div id="s-q1-tone" class="screen">
   <nav>
     <div class="logo">MM<span>.</span></div>
-    <div style="font-size:13px;color:var(--mid)">第 1 步，共 5 步</div>
+    <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('zh')">中文</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
   </nav>
   <div class="onboard-container">
-    <div class="step-bar">
-      <div class="step-dot active"></div>
-      <div class="step-dot"></div><div class="step-dot"></div>
-      <div class="step-dot"></div><div class="step-dot"></div>
-    </div>
-    <div class="q-label">Step 01 — 選擇你的Stylist風格</div>
-    <h2 class="q-title">你想要哪種造型師？</h2>
-    <p class="q-sub">不同風格的AI造型師為你提供個性化建議</p>
+    <div class="step-bar"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div class="q-label" data-i18n="tone_qlabel">Step 01 — 選擇你的Stylist風格</div>
+    <h2 class="q-title" data-i18n="tone_title">你想要哪種造型師？</h2>
+    <p class="q-sub" data-i18n="tone_sub">不同風格的AI造型師為你提供個性化建議</p>
     <div class="tone-grid">
       <div class="tone-card" onclick="selectTone(this,'bestie')">
         <div class="tone-emoji">🥂</div>
-        <div class="tone-name">閨蜜版</div>
-        <div class="tone-desc">輕鬆親切，真心話</div>
+        <div class="tone-name" data-i18n="tone_bestie_name">閨蜜版</div>
+        <div class="tone-desc" data-i18n="tone_bestie_desc">輕鬆親切，真心話</div>
       </div>
       <div class="tone-card selected" onclick="selectTone(this,'mean')">
         <div class="tone-emoji">💅</div>
-        <div class="tone-name">Mean精版</div>
-        <div class="tone-desc">廣東話犀利點評</div>
+        <div class="tone-name" data-i18n="tone_mean_name">Mean精版</div>
+        <div class="tone-desc" data-i18n="tone_mean_desc">廣東話犀利點評</div>
       </div>
       <div class="tone-card" onclick="selectTone(this,'pro')">
         <div class="tone-emoji">👔</div>
-        <div class="tone-name">專業造型師</div>
-        <div class="tone-desc">業界標準建議</div>
+        <div class="tone-name" data-i18n="tone_pro_name">專業造型師</div>
+        <div class="tone-desc" data-i18n="tone_pro_desc">業界標準建議</div>
       </div>
       <div class="tone-card" onclick="selectTone(this,'parisian')">
         <div class="tone-emoji">🗼</div>
-        <div class="tone-name">巴黎時尚風</div>
-        <div class="tone-desc">Less is more</div>
+        <div class="tone-name" data-i18n="tone_paris_name">巴黎時尚風</div>
+        <div class="tone-desc" data-i18n="tone_paris_desc">Less is more</div>
       </div>
       <div class="tone-card" onclick="selectTone(this,'kol')">
         <div class="tone-emoji">📸</div>
-        <div class="tone-name">KOL網紅版</div>
-        <div class="tone-desc">潮流前線資訊</div>
+        <div class="tone-name" data-i18n="tone_kol_name">KOL網紅版</div>
+        <div class="tone-desc" data-i18n="tone_kol_desc">潮流前線資訊</div>
       </div>
       <div class="tone-card" onclick="selectTone(this,'vintage')">
         <div class="tone-emoji">🎞️</div>
-        <div class="tone-name">古著達人版</div>
-        <div class="tone-desc">Vintage & 小眾</div>
+        <div class="tone-name" data-i18n="tone_vintage_name">古著達人版</div>
+        <div class="tone-desc" data-i18n="tone_vintage_desc">Vintage &amp; 小眾</div>
       </div>
     </div>
-    <button class="btn-primary" style="width:100%" onclick="go('s-q1-body')">繼續 →</button>
+    <button class="btn-primary" style="width:100%" onclick="go('s-q1-body')" data-i18n="btn_next">繼續 →</button>
   </div>
 </div>
 
-<!-- ══ SCREEN 2b: Q1 — BODY ══ -->
+<!-- ══ SCREEN 2b: BODY ══ -->
 <div id="s-q1-body" class="screen">
   <nav>
     <div class="logo">MM<span>.</span></div>
-    <div style="font-size:13px;color:var(--mid)">第 2 步，共 5 步</div>
+    <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('zh')">中文</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
   </nav>
   <div class="onboard-container">
-    <div class="step-bar">
-      <div class="step-dot done"></div><div class="step-dot active"></div>
-      <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
-    </div>
-    <div class="q-label">Step 02 — 上傳照片 + 身體數據</div>
-    <h2 class="q-title">讓我了解你的身型</h2>
-    <p class="q-sub">上傳全身照，AI會分析你的身型比例。所有數據嚴格保密。</p>
+    <div class="step-bar"><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div class="q-label" data-i18n="body_qlabel">Step 02 — 上傳照片 + 身體數據</div>
+    <h2 class="q-title" data-i18n="body_title">讓我了解你的身型</h2>
+    <p class="q-sub" data-i18n="body_sub">上傳全身照，AI會分析你的身型比例。所有數據嚴格保密。</p>
     <div class="upload-area" onclick="simulateUpload(this)">
       <div class="upload-icon">📸</div>
-      <div class="upload-title">上傳全身照 / 半身照</div>
-      <div class="upload-hint">支援 JPG、PNG · 建議在自然光下拍攝</div>
+      <div class="upload-title" data-i18n="upload_title">上傳全身照 / 半身照</div>
+      <div class="upload-hint" data-i18n="upload_hint">支援 JPG、PNG · 建議在自然光下拍攝</div>
     </div>
     <div class="measure-row">
       <div class="input-group">
-        <label class="input-label">身高 (cm)</label>
+        <label class="input-label" data-i18n="height_label">身高 (cm)</label>
         <input class="input-field" type="number" placeholder="165" value="165">
       </div>
       <div class="input-group">
-        <label class="input-label">體重 (kg)</label>
+        <label class="input-label" data-i18n="weight_label">體重 (kg)</label>
         <input class="input-field" type="number" placeholder="55">
       </div>
     </div>
     <div class="measure-row">
       <div class="input-group">
-        <label class="input-label">胸圍 (cm) — 選填</label>
+        <label class="input-label" data-i18n="bust_label">胸圍 (cm) — 選填</label>
         <input class="input-field" type="number" placeholder="88">
       </div>
       <div class="input-group">
-        <label class="input-label">腰圍 (cm) — 選填</label>
+        <label class="input-label" data-i18n="waist_label">腰圍 (cm) — 選填</label>
         <input class="input-field" type="number" placeholder="68">
       </div>
     </div>
-    <p style="font-size:12px;color:var(--mid);margin-bottom:20px">AI分析身型：X型 / O型 / H型 / A型 / V型 · 數據同步亞洲/歐美趨勢庫</p>
+    <p style="font-size:12px;color:var(--mid);margin-bottom:20px" data-i18n="body_hint">AI分析身型：X型 / O型 / H型 / A型 / V型 · 數據同步亞洲/歐美趨勢庫</p>
     <div style="display:flex;gap:10px">
-      <button class="btn-outline" onclick="go('s-q1-tone')">← 返回</button>
-      <button class="btn-primary" style="flex:1" onclick="go('s-q1-season')">繼續 →</button>
+      <button class="btn-outline" onclick="go('s-q1-tone')" data-i18n="btn_back">← 返回</button>
+      <button class="btn-primary" style="flex:1" onclick="go('s-q1-season')" data-i18n="btn_next">繼續 →</button>
     </div>
   </div>
 </div>
 
-<!-- ══ SCREEN 2c: Q1 — SEASON COLOR ══ -->
+<!-- ══ SCREEN 2c: SEASON ══ -->
 <div id="s-q1-season" class="screen">
   <nav>
     <div class="logo">MM<span>.</span></div>
-    <div style="font-size:13px;color:var(--mid)">第 3 步，共 5 步</div>
+    <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('zh')">中文</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
   </nav>
   <div class="onboard-container">
-    <div class="step-bar">
-      <div class="step-dot done"></div><div class="step-dot done"></div>
-      <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
-    </div>
-    <div class="q-label">Step 03 — 16型四季膚色分析</div>
-    <h2 class="q-title">你是哪個季節型？</h2>
-    <p class="q-sub">根據膚色、髮色、眼色判斷最適合你的色彩家族</p>
+    <div class="step-bar"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div class="q-label" data-i18n="season_qlabel">Step 03 — 16型四季膚色分析</div>
+    <h2 class="q-title" data-i18n="season_title">你是哪個季節型？</h2>
+    <p class="q-sub" data-i18n="season_sub">根據膚色、髮色、眼色判斷最適合你的色彩家族</p>
     <div class="season-grid">
       <div class="season-card selected" onclick="selectSeason(this)">
         <div class="season-swatch" style="background:linear-gradient(135deg,#F4E4C1,#E8C99A,#D4A976)"></div>
-        <div class="season-info"><div class="season-name">Spring 春</div><div class="season-tone">暖色系·明亮</div></div>
+        <div class="season-info">
+          <div class="season-name" data-i18n="spring_name">Spring 春</div>
+          <div class="season-tone" data-i18n="spring_tone">暖色系·明亮</div>
+        </div>
       </div>
       <div class="season-card" onclick="selectSeason(this)">
         <div class="season-swatch" style="background:linear-gradient(135deg,#B8D4E8,#8FB8D4,#6A9BB8)"></div>
-        <div class="season-info"><div class="season-name">Summer 夏</div><div class="season-tone">冷色系·柔和</div></div>
+        <div class="season-info">
+          <div class="season-name" data-i18n="summer_name">Summer 夏</div>
+          <div class="season-tone" data-i18n="summer_tone">冷色系·柔和</div>
+        </div>
       </div>
       <div class="season-card" onclick="selectSeason(this)">
         <div class="season-swatch" style="background:linear-gradient(135deg,#C4A882,#A88060,#8C6040)"></div>
-        <div class="season-info"><div class="season-name">Autumn 秋</div><div class="season-tone">暖色系·深沉</div></div>
+        <div class="season-info">
+          <div class="season-name" data-i18n="autumn_name">Autumn 秋</div>
+          <div class="season-tone" data-i18n="autumn_tone">暖色系·深沉</div>
+        </div>
       </div>
       <div class="season-card" onclick="selectSeason(this)">
         <div class="season-swatch" style="background:linear-gradient(135deg,#8090A8,#607080,#405060)"></div>
-        <div class="season-info"><div class="season-name">Winter 冬</div><div class="season-tone">冷色系·對比強</div></div>
+        <div class="season-info">
+          <div class="season-name" data-i18n="winter_name">Winter 冬</div>
+          <div class="season-tone" data-i18n="winter_tone">冷色系·對比強</div>
+        </div>
       </div>
     </div>
     <div style="background:var(--cream);border-radius:12px;padding:16px;margin-bottom:24px">
-      <div style="font-size:13px;font-weight:500;margin-bottom:8px">🌸 Spring 型推薦配色</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px" data-i18n="palette_label">🌸 Spring 型推薦配色</div>
       <div style="display:flex;gap:6px">
-        <div style="width:32px;height:32px;border-radius:50%;background:#F4C2A1" title="珊瑚橙"></div>
-        <div style="width:32px;height:32px;border-radius:50%;background:#F9E4A0" title="奶油黃"></div>
-        <div style="width:32px;height:32px;border-radius:50%;background:#B8D4A0" title="嫩綠"></div>
-        <div style="width:32px;height:32px;border-radius:50%;background:#E8B4C0" title="桃粉"></div>
-        <div style="width:32px;height:32px;border-radius:50%;background:#C4E4E8" title="水藍"></div>
-        <div style="font-size:12px;color:var(--mid);align-self:center;margin-left:4px">你的專屬色板</div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#F4C2A1"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#F9E4A0"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#B8D4A0"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#E8B4C0"></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#C4E4E8"></div>
+        <div style="font-size:12px;color:var(--mid);align-self:center;margin-left:4px" data-i18n="palette_hint">你的專屬色板</div>
       </div>
     </div>
     <div style="display:flex;gap:10px">
-      <button class="btn-outline" onclick="go('s-q1-body')">← 返回</button>
-      <button class="btn-primary" style="flex:1" onclick="go('s-q1-style')">繼續 →</button>
+      <button class="btn-outline" onclick="go('s-q1-body')" data-i18n="btn_back">← 返回</button>
+      <button class="btn-primary" style="flex:1" onclick="go('s-q1-style')" data-i18n="btn_next">繼續 →</button>
     </div>
   </div>
 </div>
 
-<!-- ══ SCREEN 2d: STYLE + PERSONALITY ══ -->
+<!-- ══ SCREEN 2d: STYLE ══ -->
 <div id="s-q1-style" class="screen">
   <nav>
     <div class="logo">MM<span>.</span></div>
-    <div style="font-size:13px;color:var(--mid)">第 4 步，共 5 步</div>
+    <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('zh')">中文</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
   </nav>
   <div class="onboard-container">
-    <div class="step-bar">
-      <div class="step-dot done"></div><div class="step-dot done"></div>
-      <div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
-    </div>
-    <div class="q-label">Step 04 — 風格偏好 + 品牌哲學</div>
-    <h2 class="q-title">你的穿衣風格</h2>
-    <p class="q-sub">可以選多個</p>
+    <div class="step-bar"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div></div>
+    <div class="q-label" data-i18n="style_qlabel">Step 04 — 風格偏好 + 品牌哲學</div>
+    <h2 class="q-title" data-i18n="style_title">你的穿衣風格</h2>
+    <p class="q-sub" data-i18n="style_sub">可以選多個</p>
     <div class="style-grid">
       <div class="style-card selected" onclick="this.classList.toggle('selected')">
-        <div class="style-icon">🌸</div><div><div class="style-name">浪漫系</div><div class="style-desc">花卉·蕾絲·飄逸</div></div>
+        <div class="style-icon">🌸</div>
+        <div><div class="style-name" data-i18n="sty_romantic">浪漫系</div><div class="style-desc" data-i18n="sty_romantic_d">花卉·蕾絲·飄逸</div></div>
       </div>
       <div class="style-card" onclick="this.classList.toggle('selected')">
-        <div class="style-icon">◽</div><div><div class="style-name">極簡主義</div><div class="style-desc">俐落·中性·Clean</div></div>
+        <div class="style-icon">◽</div>
+        <div><div class="style-name" data-i18n="sty_minimal">極簡主義</div><div class="style-desc" data-i18n="sty_minimal_d">俐落·中性·Clean</div></div>
       </div>
       <div class="style-card" onclick="this.classList.toggle('selected')">
-        <div class="style-icon">🌿</div><div><div class="style-name">森林系</div><div class="style-desc">自然·棉麻·大地色</div></div>
+        <div class="style-icon">🌿</div>
+        <div><div class="style-name" data-i18n="sty_forest">森林系</div><div class="style-desc" data-i18n="sty_forest_d">自然·棉麻·大地色</div></div>
       </div>
       <div class="style-card" onclick="this.classList.toggle('selected')">
-        <div class="style-icon">🧺</div><div><div class="style-name">Cottage Core</div><div class="style-desc">田園·刺繡·復古</div></div>
+        <div class="style-icon">🧺</div>
+        <div><div class="style-name">Cottage Core</div><div class="style-desc" data-i18n="sty_cottage_d">田園·刺繡·復古</div></div>
       </div>
       <div class="style-card" onclick="this.classList.toggle('selected')">
-        <div class="style-icon">🏙️</div><div><div class="style-name">本地風格</div><div class="style-desc">HK/French/Japanese…</div></div>
+        <div class="style-icon">🏙️</div>
+        <div><div class="style-name" data-i18n="sty_local">本地風格</div><div class="style-desc">HK/French/Japanese…</div></div>
       </div>
       <div class="style-card" onclick="this.classList.toggle('selected')">
-        <div class="style-icon">🎞️</div><div><div class="style-name">Vintage / 古著</div><div class="style-desc">博物館·二手店·小眾</div></div>
+        <div class="style-icon">🎞️</div>
+        <div><div class="style-name" data-i18n="sty_vintage">Vintage / 古著</div><div class="style-desc" data-i18n="sty_vintage_d">博物館·二手店·小眾</div></div>
       </div>
     </div>
-
-    <p style="font-size:13px;font-weight:500;margin-bottom:8px">品牌哲學 — 用 Motto 代替品牌名做混搭</p>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px" data-i18n="motto_label">品牌哲學 — 用 Motto 代替品牌名做混搭</p>
     <div class="chip-group" style="margin-bottom:18px">
       <div class="chip selected" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Buy less, choose well</em></div>
       <div class="chip" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Luxury is a state of mind</em></div>
@@ -968,46 +970,41 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
       <div class="chip" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Quiet elegance</em></div>
       <div class="chip" onclick="this.classList.toggle('selected')"><em style="font-size:11px;color:var(--gold)">Made to measure</em></div>
     </div>
-
     <div class="vintage-banner">
       <div>
-        <div class="vintage-label">🎞️ 包含古著 / 二手衣物</div>
-        <div style="font-size:11px;opacity:0.65;margin-top:2px">博物館 · Vintage Shop · 二手平台</div>
+        <div class="vintage-label" data-i18n="vintage_main">🎞️ 包含古著 / 二手衣物</div>
+        <div style="font-size:11px;opacity:0.65;margin-top:2px" data-i18n="vintage_sub">博物館 · Vintage Shop · 二手平台</div>
       </div>
-      <div class="toggle-pill on" id="vintage-toggle" onclick="this.classList.toggle('on')">
-        <div class="toggle-knob"></div>
-      </div>
+      <div class="toggle-pill on" id="vintage-toggle" onclick="this.classList.toggle('on')"><div class="toggle-knob"></div></div>
     </div>
-
-    <p style="font-size:13px;font-weight:500;margin-bottom:8px">顏色深淺偏好</p>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px" data-i18n="cdepth_label">顏色深淺偏好</p>
     <div class="colour-depth-row">
-      <div class="cdepth-option selected" onclick="selectCdepth(this)">深色系</div>
-      <div class="cdepth-option" onclick="selectCdepth(this)">中性色</div>
-      <div class="cdepth-option" onclick="selectCdepth(this)">淺色系</div>
-      <div class="cdepth-option" onclick="selectCdepth(this)">明亮鮮色</div>
-      <div class="cdepth-option" onclick="selectCdepth(this)">灰暗霧感</div>
+      <div class="cdepth-option selected" onclick="selectCdepth(this)" data-i18n="cd_dark">深色系</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)" data-i18n="cd_mid">中性色</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)" data-i18n="cd_light">淺色系</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)" data-i18n="cd_bright">明亮鮮色</div>
+      <div class="cdepth-option" onclick="selectCdepth(this)" data-i18n="cd_muted">灰暗霧感</div>
     </div>
-
-    <p style="font-size:13px;font-weight:500;margin-bottom:10px">個性標籤 — MBTI / 星座 / 生肖</p>
+    <p style="font-size:13px;font-weight:500;margin-bottom:10px" data-i18n="tag_label">個性標籤 — MBTI / 星座 / 生肖</p>
     <div class="chip-group">
       <div class="chip selected" onclick="this.classList.toggle('selected')">INFJ</div>
       <div class="chip" onclick="this.classList.toggle('selected')">ENFP</div>
       <div class="chip" onclick="this.classList.toggle('selected')">INTJ</div>
       <div class="chip" onclick="this.classList.toggle('selected')">ENTP</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">♈ 白羊</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">♍ 處女</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">♎ 天秤</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">🐉 龍年</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">🐰 兔年</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">🐍 蛇年</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">Harry Potter風</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">本地Queen風</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">仙女系</div>
-      <div class="chip" onclick="this.classList.toggle('selected')">極繁主義</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="zodiac_aries">♈ 白羊</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="zodiac_virgo">♍ 處女</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="zodiac_libra">♎ 天秤</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="cz_dragon">🐉 龍年</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="cz_rabbit">🐰 兔年</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="cz_snake">🐍 蛇年</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="tag_hp">Harry Potter風</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="tag_queen">本地Queen風</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="tag_fairy">仙女系</div>
+      <div class="chip" onclick="this.classList.toggle('selected')" data-i18n="tag_maximal">極繁主義</div>
     </div>
     <div style="display:flex;gap:10px;margin-top:8px">
-      <button class="btn-outline" onclick="go('s-q1-season')">← 返回</button>
-      <button class="btn-primary" style="flex:1" onclick="go('s-q1-budget')">繼續 →</button>
+      <button class="btn-outline" onclick="go('s-q1-season')" data-i18n="btn_back">← 返回</button>
+      <button class="btn-primary" style="flex:1" onclick="go('s-q1-budget')" data-i18n="btn_next">繼續 →</button>
     </div>
   </div>
 </div>
@@ -1016,46 +1013,36 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
 <div id="s-q1-budget" class="screen">
   <nav>
     <div class="logo">MM<span>.</span></div>
-    <div style="font-size:13px;color:var(--mid)">第 5 步，共 5 步</div>
+    <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('zh')">中文</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
   </nav>
   <div class="onboard-container">
-    <div class="step-bar">
-      <div class="step-dot done"></div><div class="step-dot done"></div>
-      <div class="step-dot done"></div><div class="step-dot done"></div>
-      <div class="step-dot active"></div>
-    </div>
-    <div class="q-label">Step 05 — 預算設定</div>
-    <h2 class="q-title">每月服裝預算</h2>
-    <p class="q-sub">AI會根據預算為你推薦最適合的選項</p>
+    <div class="step-bar"><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div></div>
+    <div class="q-label" data-i18n="budget_qlabel">Step 05 — 預算設定</div>
+    <h2 class="q-title" data-i18n="budget_title">每月服裝預算</h2>
+    <p class="q-sub" data-i18n="budget_sub">AI會根據預算為你推薦最適合的選項</p>
     <div class="budget-list">
       <div class="budget-option" onclick="selectBudget(this)">
-        <div><div class="budget-label">HK$100 以下</div><div class="budget-desc">實惠精選 · 二手好貨</div></div>
-        <span>💰</span>
+        <div><div class="budget-label" data-i18n="b1_label">HK$100 以下</div><div class="budget-desc" data-i18n="b1_desc">實惠精選 · 二手好貨</div></div><span>💰</span>
       </div>
       <div class="budget-option" onclick="selectBudget(this)">
-        <div><div class="budget-label">HK$100–500</div><div class="budget-desc">高性價比品牌</div></div>
-        <span>💰💰</span>
+        <div><div class="budget-label">HK$100–500</div><div class="budget-desc" data-i18n="b2_desc">高性價比品牌</div></div><span>💰💰</span>
       </div>
       <div class="budget-option selected" onclick="selectBudget(this)">
-        <div><div class="budget-label">HK$500–1,000</div><div class="budget-desc">中端品牌 · UNIQLO等</div></div>
-        <span>💰💰💰</span>
+        <div><div class="budget-label">HK$500–1,000</div><div class="budget-desc" data-i18n="b3_desc">中端品牌 · UNIQLO等</div></div><span>💰💰💰</span>
       </div>
       <div class="budget-option" onclick="selectBudget(this)">
-        <div><div class="budget-label">HK$1,000–3,000</div><div class="budget-desc">輕奢品牌</div></div>
-        <span>💎</span>
+        <div><div class="budget-label">HK$1,000–3,000</div><div class="budget-desc" data-i18n="b4_desc">輕奢品牌</div></div><span>💎</span>
       </div>
       <div class="budget-option" onclick="selectBudget(this)">
-        <div><div class="budget-label">HK$3,000–10,000</div><div class="budget-desc">設計師品牌</div></div>
-        <span>💎💎</span>
+        <div><div class="budget-label">HK$3,000–10,000</div><div class="budget-desc" data-i18n="b5_desc">設計師品牌</div></div><span>💎💎</span>
       </div>
       <div class="budget-option" onclick="selectBudget(this)">
-        <div><div class="budget-label">HK$10,000+</div><div class="budget-desc">奢侈品 · Dior · LV</div></div>
-        <span>👑</span>
+        <div><div class="budget-label">HK$10,000+</div><div class="budget-desc" data-i18n="b6_desc">奢侈品 · Dior · LV</div></div><span>👑</span>
       </div>
     </div>
     <div style="display:flex;gap:10px">
-      <button class="btn-outline" onclick="go('s-q1-style')">← 返回</button>
-      <button class="btn-gold" style="flex:1" onclick="completeOnboarding()">生成我的風格DNA ✦</button>
+      <button class="btn-outline" onclick="go('s-q1-style')" data-i18n="btn_back">← 返回</button>
+      <button class="btn-gold" style="flex:1" onclick="completeOnboarding()" data-i18n="budget_cta">生成我的風格DNA ✦</button>
     </div>
   </div>
 </div>
@@ -1075,47 +1062,45 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
         <button class="lang-btn active" onclick="setLang('zh')">中文</button>
         <button class="lang-btn" onclick="setLang('en')">EN</button>
       </div>
-      <div class="theme-switcher" title="切換介面風格">
-        <button class="theme-btn active" onclick="setTheme('default',this)" title="Default" style="background:#F5F0E8;">☀️</button>
-        <button class="theme-btn" onclick="setTheme('tech',this)" title="Tech" style="background:#0E1117;color:#4FC3F7;">⚡</button>
-        <button class="theme-btn" onclick="setTheme('warm',this)" title="Warm" style="background:#FFF0E0;">🧡</button>
+      <div class="theme-switcher">
+        <button class="theme-btn active" onclick="setTheme('default',this)" style="background:#F5F0E8;">☀️</button>
+        <button class="theme-btn" onclick="setTheme('tech',this)" style="background:#0E1117;color:#4FC3F7;">⚡</button>
+        <button class="theme-btn" onclick="setTheme('warm',this)" style="background:#FFF0E0;">🧡</button>
       </div>
     </div>
   </nav>
 
   <div class="main-layout">
-    <!-- Sidebar -->
     <div class="sidebar">
       <div class="profile-mini">
         <div class="profile-name">✨ Style DNA</div>
-        <div class="profile-dna">Spring · X型身型 · 浪漫極簡混搭</div>
+        <div class="profile-dna" data-i18n="profile_dna">Spring · X型身型 · 浪漫極簡混搭</div>
       </div>
-      <div class="sidebar-section">主要功能</div>
+      <div class="sidebar-section" data-i18n="sb_main">主要功能</div>
       <button class="sidebar-item active" onclick="switchSidebar(this,'tab-today')">
-        <span class="sidebar-icon">☀️</span> 今日配搭
+        <span class="sidebar-icon">☀️</span> <span data-i18n="sb_today">今日配搭</span>
       </button>
       <button class="sidebar-item" onclick="switchSidebar(this,'tab-chat')">
-        <span class="sidebar-icon">💬</span> AI造型對話
+        <span class="sidebar-icon">💬</span> <span data-i18n="sb_chat">AI造型對話</span>
       </button>
       <button class="sidebar-item" onclick="switchSidebar(this,'tab-wardrobe')">
-        <span class="sidebar-icon">👗</span> 我的衣櫥
+        <span class="sidebar-icon">👗</span> <span data-i18n="sb_wardrobe">我的衣櫥</span>
       </button>
       <button class="sidebar-item" onclick="switchSidebar(this,'tab-dna')">
-        <span class="sidebar-icon">🧬</span> 風格DNA
+        <span class="sidebar-icon">🧬</span> <span data-i18n="sb_dna">風格DNA</span>
       </button>
-      <div class="sidebar-section">更多功能</div>
+      <div class="sidebar-section" data-i18n="sb_more">更多功能</div>
       <button class="sidebar-item" onclick="switchSidebar(this,'tab-map')">
-        <span class="sidebar-icon">🗺️</span> 附近店鋪
+        <span class="sidebar-icon">🗺️</span> <span data-i18n="sb_map">附近店鋪</span>
       </button>
       <button class="sidebar-item" onclick="switchSidebar(this,'tab-ar')">
-        <span class="sidebar-icon">🥽</span> AR試衣間
+        <span class="sidebar-icon">🥽</span> <span data-i18n="sb_ar">AR試衣間</span>
       </button>
       <button class="sidebar-item" onclick="switchSidebar(this,'tab-meta')">
-        <span class="sidebar-icon">🌐</span> 元宇宙
+        <span class="sidebar-icon">🌐</span> <span data-i18n="sb_meta">元宇宙</span>
       </button>
     </div>
 
-    <!-- Content -->
     <div class="main-content">
 
       <!-- TODAY TAB -->
@@ -1125,47 +1110,47 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
             <div class="weather-icon">⛅</div>
             <div>
               <div class="weather-temp">22°C</div>
-              <div class="weather-desc">多雲 · 適合外出</div>
+              <div class="weather-desc" data-i18n="weather_desc">多雲 · 適合外出</div>
             </div>
           </div>
-          <div class="weather-occasion">📅 今日：Casual Friday</div>
+          <div class="weather-occasion">📅 <span data-i18n="occasion">今日：Casual Friday</span></div>
         </div>
 
         <div class="daily-deal">
-          <div class="deal-badge">每日限定</div>
+          <div class="deal-badge" data-i18n="deal_badge">每日限定</div>
           <div class="deal-info">
-            <div class="deal-item">UNIQLO 輕便羽絨背心 — 你的Spring型必備款</div>
+            <div class="deal-item" data-i18n="deal_item">UNIQLO 輕便羽絨背心 — 你的Spring型必備款</div>
             <div class="deal-price">
               <span class="deal-new">HK$299</span>
               <span class="deal-old">HK$499</span>
             </div>
           </div>
-          <div class="deal-timer" id="deal-timer">23:14:32</div>
+          <div class="deal-timer" id="deal-timer">00:00:00</div>
         </div>
 
         <div class="section-header">
-          <h2>今日3套配搭</h2>
-          <p>根據天氣·膚色·場合為你精選</p>
+          <h2 data-i18n="today_h2">今日3套配搭</h2>
+          <p data-i18n="today_sub">根據天氣·膚色·場合為你精選</p>
         </div>
 
         <div class="outfit-grid">
           <div class="outfit-card featured" onclick="openRating()">
             <div class="outfit-visual" style="background:#FBF3E8" id="ov1">
-              <div class="outfit-badge">AI首選</div>
+              <div class="outfit-badge" data-i18n="badge_ai">AI首選</div>
               <div class="outfit-clothes">🧥<br>👗<br>👟</div>
             </div>
             <div class="outfit-info">
-              <div class="outfit-name">Casual Romantic</div>
-              <div class="outfit-desc">奶油白針織外套 + 碎花裙 + 白波鞋</div>
+              <div class="outfit-name" data-i18n="outfit1_name">Casual Romantic</div>
+              <div class="outfit-desc" data-i18n="outfit1_desc">奶油白針織外套 + 碎花裙 + 白波鞋</div>
               <div class="outfit-score">
-                <span>配色</span>
+                <span data-i18n="score_colour_short">配色</span>
                 <div class="score-bar"><div class="score-fill" style="width:92%"></div></div>
-                <span style="font-size:11px;color:var(--mid);white-space:nowrap">92分</span>
+                <span style="font-size:11px;color:var(--mid);white-space:nowrap" data-i18n="score_92">92分</span>
               </div>
             </div>
             <div class="outfit-actions">
-              <button class="act-btn primary">選擇此配搭</button>
-              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)">購買連結 <span class="aff-badge">追蹤</span></button>
+              <button class="act-btn primary" data-i18n="outfit_select">選擇此配搭</button>
+              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)"><span data-i18n="outfit_buy">購買連結</span> <span class="aff-badge" data-i18n="aff_track">追蹤</span></button>
             </div>
           </div>
 
@@ -1174,17 +1159,17 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
               <div class="outfit-clothes">🧤<br>👔<br>🩷</div>
             </div>
             <div class="outfit-info">
-              <div class="outfit-name">Minimal Chic</div>
-              <div class="outfit-desc">灰色西裝外套 + 白Tee + 粉色闊腿褲</div>
+              <div class="outfit-name" data-i18n="outfit2_name">Minimal Chic</div>
+              <div class="outfit-desc" data-i18n="outfit2_desc">灰色西裝外套 + 白Tee + 粉色闊腿褲</div>
               <div class="outfit-score">
-                <span>配色</span>
+                <span data-i18n="score_colour_short">配色</span>
                 <div class="score-bar"><div class="score-fill" style="width:87%"></div></div>
-                <span style="font-size:11px;color:var(--mid);white-space:nowrap">87分</span>
+                <span style="font-size:11px;color:var(--mid);white-space:nowrap" data-i18n="score_87">87分</span>
               </div>
             </div>
             <div class="outfit-actions">
-              <button class="act-btn">選擇此配搭</button>
-              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)">購買連結 <span class="aff-badge">追蹤</span></button>
+              <button class="act-btn" data-i18n="outfit_select">選擇此配搭</button>
+              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)"><span data-i18n="outfit_buy">購買連結</span> <span class="aff-badge" data-i18n="aff_track">追蹤</span></button>
             </div>
           </div>
 
@@ -1193,27 +1178,26 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
               <div class="outfit-clothes">🧣<br>🟩<br>👜</div>
             </div>
             <div class="outfit-info">
-              <div class="outfit-name">Forest Vibe</div>
-              <div class="outfit-desc">橄欖綠針織 + 棕色皮褲 + 托特包</div>
+              <div class="outfit-name" data-i18n="outfit3_name">Forest Vibe</div>
+              <div class="outfit-desc" data-i18n="outfit3_desc">橄欖綠針織 + 棕色皮褲 + 托特包</div>
               <div class="outfit-score">
-                <span>配色</span>
+                <span data-i18n="score_colour_short">配色</span>
                 <div class="score-bar"><div class="score-fill" style="width:83%"></div></div>
-                <span style="font-size:11px;color:var(--mid);white-space:nowrap">83分</span>
+                <span style="font-size:11px;color:var(--mid);white-space:nowrap" data-i18n="score_83">83分</span>
               </div>
             </div>
             <div class="outfit-actions">
-              <button class="act-btn">選擇此配搭</button>
-              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)">購買連結 <span class="aff-badge">追蹤</span></button>
+              <button class="act-btn" data-i18n="outfit_select">選擇此配搭</button>
+              <button class="act-btn" onclick="event.stopPropagation();showAffLink(this)"><span data-i18n="outfit_buy">購買連結</span> <span class="aff-badge" data-i18n="aff_track">追蹤</span></button>
             </div>
           </div>
         </div>
 
-        <!-- KOL / Stylist search bar for each recommendation -->
         <div style="margin-bottom:24px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:10px">🔍 讓KOL / 造型師為你搜索配搭</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:10px" data-i18n="kol_heading">🔍 讓KOL / 造型師為你搜索配搭</div>
           <div class="kol-search-wrap">
             <span class="kol-search-icon">🔍</span>
-            <input class="kol-search-input" type="text" placeholder="搜索造型師、KOL、藝術家的版本…" oninput="searchKOL(this.value)">
+            <input class="kol-search-input" type="text" placeholder="搜索造型師、KOL、藝術家的版本…" oninput="searchKOL(this.value)" id="kol-input">
           </div>
           <div class="kol-result-chips" id="kol-results">
             <div class="kol-chip"><div class="kol-chip-avatar">👑</div>@fashionhk_queen</div>
@@ -1221,34 +1205,33 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
             <div class="kol-chip"><div class="kol-chip-avatar">🎨</div>@local_art_style</div>
             <div class="kol-chip"><div class="kol-chip-avatar">🌿</div>@vintage_hk</div>
           </div>
-          <div style="font-size:11px;color:var(--mid);margin-top:8px">KOL分享後，MM會收集數據並生成相似配搭供未來參考</div>
+          <div style="font-size:11px;color:var(--mid);margin-top:8px" data-i18n="kol_hint">KOL分享後，MM會收集數據並生成相似配搭供未來參考</div>
         </div>
 
-        <!-- 5-dimension scoring panel -->
         <div class="score-panel">
-          <div class="score-panel-title">今日配搭評分 — AI分析</div>
+          <div class="score-panel-title" data-i18n="score_title">今日配搭評分 — AI分析</div>
           <div class="score-row">
-            <div class="score-row-label">配色適宜度</div>
+            <div class="score-row-label" data-i18n="score_colour">配色適宜度</div>
             <div class="score-row-bar"><div class="score-row-fill" style="width:92%"></div></div>
             <div class="score-row-val">92</div>
           </div>
           <div class="score-row">
-            <div class="score-row-label">流行度</div>
+            <div class="score-row-label" data-i18n="score_trend">流行度</div>
             <div class="score-row-bar"><div class="score-row-fill" style="width:85%"></div></div>
             <div class="score-row-val">85</div>
           </div>
           <div class="score-row">
-            <div class="score-row-label">身型表現度</div>
+            <div class="score-row-label" data-i18n="score_body">身型表現度</div>
             <div class="score-row-bar"><div class="score-row-fill" style="width:88%"></div></div>
             <div class="score-row-val">88</div>
           </div>
           <div class="score-row">
-            <div class="score-row-label">場合契合度</div>
+            <div class="score-row-label" data-i18n="score_occasion">場合契合度</div>
             <div class="score-row-bar"><div class="score-row-fill" style="width:90%"></div></div>
             <div class="score-row-val">90</div>
           </div>
           <div class="score-row">
-            <div class="score-row-label">6:3:1配色比例</div>
+            <div class="score-row-label" data-i18n="score_ratio">6:3:1配色比例</div>
             <div class="score-row-bar"><div class="score-row-fill" style="width:95%"></div></div>
             <div class="score-row-val">95</div>
           </div>
@@ -1259,7 +1242,9 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
               <div style="flex:1;height:10px;border-radius:4px;background:var(--charcoal)"></div>
             </div>
             <div style="display:flex;gap:8px;margin-top:5px;font-size:10px;color:var(--mid)">
-              <span style="flex:6">60% 基調</span><span style="flex:3">30% 輔助</span><span style="flex:1;white-space:nowrap">10%</span>
+              <span style="flex:6" data-i18n="ratio_base">60% 基調</span>
+              <span style="flex:3" data-i18n="ratio_accent">30% 輔助</span>
+              <span style="flex:1;white-space:nowrap">10%</span>
             </div>
           </div>
         </div>
@@ -1268,20 +1253,20 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
       <!-- CHAT TAB -->
       <div id="tab-chat" class="content-panel">
         <div class="section-header">
-          <h2>AI造型師對話</h2>
-          <p>隨時問我任何關於穿搭的問題</p>
+          <h2 data-i18n="chat_h2">AI造型師對話</h2>
+          <p data-i18n="chat_sub">隨時問我任何關於穿搭的問題</p>
         </div>
         <div class="tone-selector-mini">
-          <button class="tone-mini-btn active" onclick="setTone(this,'mean')">💅 Mean精版</button>
-          <button class="tone-mini-btn" onclick="setTone(this,'bestie')">🥂 閨蜜版</button>
-          <button class="tone-mini-btn" onclick="setTone(this,'pro')">👔 專業版</button>
-          <button class="tone-mini-btn" onclick="setTone(this,'kol')">📸 KOL版</button>
+          <button class="tone-mini-btn active" onclick="setTone(this,'mean')" data-i18n="tone_mean_btn">💅 Mean精版</button>
+          <button class="tone-mini-btn" onclick="setTone(this,'bestie')" data-i18n="tone_bestie_btn">🥂 閨蜜版</button>
+          <button class="tone-mini-btn" onclick="setTone(this,'pro')" data-i18n="tone_pro_btn">👔 專業版</button>
+          <button class="tone-mini-btn" onclick="setTone(this,'kol')" data-i18n="tone_kol_btn">📸 KOL版</button>
         </div>
         <div class="chat-container">
           <div class="chat-messages" id="chat-messages">
             <div class="msg ai">
               <div class="msg-avatar">MM</div>
-              <div class="msg-bubble">噚日條裙係咁，今日？姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！今日幫你揀咗3套，都係warm + 輕柔tone，你話邊套最啱心水？😝</div>
+              <div class="msg-bubble" id="chat-greeting">噚日條裙係咁，今日？姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！今日幫你揀咗3套，你話邊套最啱心水？😝</div>
             </div>
           </div>
           <div class="chat-input-row">
@@ -1294,450 +1279,418 @@ body.theme-tech .lang-btn.active { background: #4FC3F7; color: #071428; }
       <!-- WARDROBE TAB -->
       <div id="tab-wardrobe" class="content-panel">
         <div class="section-header">
-          <h2>我的衣櫥</h2>
-          <p>32件單品 · AI已分類整理</p>
+          <h2 data-i18n="ward_h2">我的衣櫥</h2>
+          <p data-i18n="ward_sub">32件單品 · AI已分類整理</p>
         </div>
         <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
-          <button class="chip selected" onclick="this.classList.toggle('selected')">全部</button>
-          <button class="chip" onclick="this.classList.toggle('selected')">上衣</button>
-          <button class="chip" onclick="this.classList.toggle('selected')">外套</button>
-          <button class="chip" onclick="this.classList.toggle('selected')">裙/褲</button>
-          <button class="chip" onclick="this.classList.toggle('selected')">鞋履</button>
-          <button class="chip" onclick="this.classList.toggle('selected')">配飾</button>
-          <button class="chip" onclick="this.classList.toggle('selected')">古著</button>
+          <button class="chip selected" onclick="this.classList.toggle('selected')" data-i18n="ward_all">全部</button>
+          <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="ward_top">上衣</button>
+          <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="ward_outer">外套</button>
+          <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="ward_bottom">裙/褲</button>
+          <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="ward_shoes">鞋履</button>
+          <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="ward_acc">配飾</button>
+          <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="ward_vintage">古著</button>
         </div>
         <div class="wardrobe-grid">
-          <div class="add-wardrobe"><div class="plus">+</div><div>上傳衣物</div></div>
-          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#FBF3E8">🧥</div><div class="wardrobe-meta"><div class="wardrobe-type">針織外套</div><div class="wardrobe-color">奶油白</div></div></div>
-          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F5E8F0">👗</div><div class="wardrobe-meta"><div class="wardrobe-type">碎花裙</div><div class="wardrobe-color">粉底花紋</div></div></div>
-          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#EEF2EE">🧣</div><div class="wardrobe-meta"><div class="wardrobe-type">圍巾</div><div class="wardrobe-color">橄欖綠</div></div></div>
-          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F0F0EE">👔</div><div class="wardrobe-meta"><div class="wardrobe-type">西裝外套</div><div class="wardrobe-color">灰色</div></div></div>
-          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#FFF8EC">👟</div><div class="wardrobe-meta"><div class="wardrobe-type">波鞋</div><div class="wardrobe-color">白色</div></div></div>
-          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F5E8E8">👜</div><div class="wardrobe-meta"><div class="wardrobe-type">托特包</div><div class="wardrobe-color">棕色</div></div></div>
-          <div class="wardrobe-item" style="border:1.5px dashed #C9A84C"><div class="wardrobe-thumb" style="background:#FBF7EF">🛍️</div><div class="wardrobe-meta"><div class="wardrobe-type" style="color:var(--gold)">缺少：中性風褸</div><div class="wardrobe-color">AI建議補充</div></div></div>
+          <div class="add-wardrobe"><div class="plus">+</div><div data-i18n="ward_upload">上傳衣物</div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#FBF3E8">🧥</div><div class="wardrobe-meta"><div class="wardrobe-type" data-i18n="wi_knit">針織外套</div><div class="wardrobe-color" data-i18n="wi_cream">奶油白</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F5E8F0">👗</div><div class="wardrobe-meta"><div class="wardrobe-type" data-i18n="wi_floral">碎花裙</div><div class="wardrobe-color" data-i18n="wi_pink">粉底花紋</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#EEF2EE">🧣</div><div class="wardrobe-meta"><div class="wardrobe-type" data-i18n="wi_scarf">圍巾</div><div class="wardrobe-color" data-i18n="wi_olive">橄欖綠</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F0F0EE">👔</div><div class="wardrobe-meta"><div class="wardrobe-type" data-i18n="wi_blazer">西裝外套</div><div class="wardrobe-color" data-i18n="wi_grey">灰色</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#FFF8EC">👟</div><div class="wardrobe-meta"><div class="wardrobe-type" data-i18n="wi_sneaker">波鞋</div><div class="wardrobe-color" data-i18n="wi_white">白色</div></div></div>
+          <div class="wardrobe-item"><div class="wardrobe-thumb" style="background:#F5E8E8">👜</div><div class="wardrobe-meta"><div class="wardrobe-type" data-i18n="wi_tote">托特包</div><div class="wardrobe-color" data-i18n="wi_brown">棕色</div></div></div>
+          <div class="wardrobe-item" style="border:1.5px dashed #C9A84C"><div class="wardrobe-thumb" style="background:#FBF7EF">🛍️</div><div class="wardrobe-meta"><div class="wardrobe-type" style="color:var(--gold)" data-i18n="wi_gap">缺少：中性風褸</div><div class="wardrobe-color" data-i18n="ward_gap">AI建議補充</div></div></div>
         </div>
       </div>
 
       <!-- DNA TAB -->
       <div id="tab-dna" class="content-panel">
-        <div class="section-header"><h2>我的風格DNA</h2><p>AI分析你的穿搭個性</p></div>
+        <div class="section-header">
+          <h2 data-i18n="dna_h2">我的風格DNA</h2>
+          <p data-i18n="dna_sub">AI分析你的穿搭個性</p>
+        </div>
         <div class="dna-card">
-          <div class="dna-title">Spring × Romantic-Minimal</div>
+          <div class="dna-title" data-i18n="dna_title">Spring × Romantic-Minimal</div>
           <div class="dna-tags">
-            <span class="dna-tag primary">Spring暖色型</span>
-            <span class="dna-tag">X型身型</span>
-            <span class="dna-tag">浪漫極簡混搭</span>
+            <span class="dna-tag primary" data-i18n="dna_tag1">Spring暖色型</span>
+            <span class="dna-tag" data-i18n="dna_tag2">X型身型</span>
+            <span class="dna-tag" data-i18n="dna_tag3">浪漫極簡混搭</span>
             <span class="dna-tag">INFJ</span>
             <span class="dna-tag">Buy less, choose well</span>
           </div>
         </div>
         <div class="stat-grid">
-          <div class="stat-card"><div class="stat-val">92%</div><div class="stat-label">配色適宜度</div></div>
-          <div class="stat-card"><div class="stat-val">87%</div><div class="stat-label">身型表現度</div></div>
-          <div class="stat-card"><div class="stat-val">32</div><div class="stat-label">衣物件數</div></div>
+          <div class="stat-card"><div class="stat-val">92%</div><div class="stat-label" data-i18n="stat_colour">配色適宜度</div></div>
+          <div class="stat-card"><div class="stat-val">87%</div><div class="stat-label" data-i18n="stat_body">身型表現度</div></div>
+          <div class="stat-card"><div class="stat-val">32</div><div class="stat-label" data-i18n="stat_count">衣物件數</div></div>
         </div>
         <div style="background:var(--cream);border-radius:12px;padding:18px;margin-bottom:16px">
-          <div style="font-size:14px;font-weight:500;margin-bottom:12px">滿意度調查</div>
-          <div style="font-size:13px;color:var(--mid);margin-bottom:8px">AI幫你解決日常搭配的煩惱嗎？</div>
+          <div style="font-size:14px;font-weight:500;margin-bottom:12px" data-i18n="sat_title">滿意度調查</div>
+          <div style="font-size:13px;color:var(--mid);margin-bottom:8px" data-i18n="sat_q">AI幫你解決日常搭配的煩惱嗎？</div>
           <div style="display:flex;gap:10px">
-            <button class="btn-outline" style="padding:8px 20px;font-size:13px">😐 一般</button>
-            <button class="btn-primary" style="padding:8px 20px;font-size:13px">😍 很滿意</button>
+            <button class="btn-outline" style="padding:8px 20px;font-size:13px" data-i18n="sat_ok">😐 一般</button>
+            <button class="btn-primary" style="padding:8px 20px;font-size:13px" data-i18n="sat_good">😍 很滿意</button>
           </div>
         </div>
       </div>
 
       <!-- MAP TAB -->
       <div id="tab-map" class="content-panel">
-        <div class="section-header"><h2>附近店鋪</h2><p>即刻去買，唔使等快遞</p></div>
+        <div class="section-header">
+          <h2 data-i18n="map_h2">附近店鋪</h2>
+          <p data-i18n="map_sub">即刻去買，唔使等快遞</p>
+        </div>
         <div class="map-placeholder">
           <div class="map-grid"></div>
           <div style="position:relative;text-align:center">
-            <div class="map-pin" style="position:absolute;left:-60px;top:-20px">
-              📍<span class="map-pin-label">UNIQLO</span>
-            </div>
-            <div class="map-pin">📍<span class="map-pin-label">你在這</span></div>
-            <div class="map-pin" style="position:absolute;right:-80px;top:20px">
-              📍<span class="map-pin-label">ZARA</span>
-            </div>
+            <div class="map-pin" style="position:absolute;left:-60px;top:-20px">📍<span class="map-pin-label">UNIQLO</span></div>
+            <div class="map-pin">📍<span class="map-pin-label" data-i18n="you_here">你在這</span></div>
+            <div class="map-pin" style="position:absolute;right:-80px;top:20px">📍<span class="map-pin-label">ZARA</span></div>
           </div>
         </div>
         <div class="shop-list">
-          <div class="shop-item"><div class="shop-icon">🏪</div><div><div class="shop-name">UNIQLO 銅鑼灣</div><div class="shop-info">備貨充足 · 你的AI推薦款有貨</div></div><div class="shop-dist">280m</div></div>
-          <div class="shop-item"><div class="shop-icon">✂️</div><div><div class="shop-name">Vintage Corner</div><div class="shop-info">小眾古著店 · 全店已掃描入庫</div></div><div class="shop-dist">450m</div></div>
-          <div class="shop-item"><div class="shop-icon">👑</div><div><div class="shop-name">ZARA 時代廣場</div><div class="shop-info">本季新款 · KOL合作款</div></div><div class="shop-dist">720m</div></div>
-          <div class="shop-item"><div class="shop-icon">🎨</div><div><div class="shop-name">本地設計師 Popup</div><div class="shop-info">HK本地品牌 · 獨家聯名</div></div><div class="shop-dist">1.1km</div></div>
+          <div class="shop-item"><div class="shop-icon">🏪</div><div><div class="shop-name">UNIQLO <span data-i18n="shop1_loc">銅鑼灣</span></div><div class="shop-info" data-i18n="shop1_info">備貨充足 · 你的AI推薦款有貨</div></div><div class="shop-dist">280m</div></div>
+          <div class="shop-item"><div class="shop-icon">✂️</div><div><div class="shop-name">Vintage Corner</div><div class="shop-info" data-i18n="shop2_info">小眾古著店 · 全店已掃描入庫</div></div><div class="shop-dist">450m</div></div>
+          <div class="shop-item"><div class="shop-icon">👑</div><div><div class="shop-name">ZARA <span data-i18n="shop3_loc">時代廣場</span></div><div class="shop-info" data-i18n="shop3_info">本季新款 · KOL合作款</div></div><div class="shop-dist">720m</div></div>
+          <div class="shop-item"><div class="shop-icon">🎨</div><div><div class="shop-name" data-i18n="shop4_name">本地設計師 Popup</div><div class="shop-info" data-i18n="shop4_info">HK本地品牌 · 獨家聯名</div></div><div class="shop-dist">1.1km</div></div>
         </div>
       </div>
 
       <!-- AR TAB -->
       <div id="tab-ar" class="content-panel">
-        <div class="section-header"><h2>AR虛擬試衣間</h2><p>Q4 即將推出</p></div>
+        <div class="section-header">
+          <h2 data-i18n="ar_h2">AR虛擬試衣間</h2>
+          <p data-i18n="ar_coming">Q4 即將推出</p>
+        </div>
         <div class="ar-container">
           <div class="ar-icon">🥽</div>
-          <div class="ar-title">VR Closet — 虛擬衣櫥</div>
-          <div class="ar-sub">用AR試穿任何衣物，不需要實體試衣室<br>Freemium · 基礎功能免費</div>
-          <button class="btn-gold">加入等候名單</button>
+          <div class="ar-title" data-i18n="ar_title">VR Closet — 虛擬衣櫥</div>
+          <div class="ar-sub" data-i18n="ar_sub">用AR試穿任何衣物，不需要實體試衣室<br>Freemium · 基礎功能免費</div>
+          <button class="btn-gold" data-i18n="ar_join">加入等候名單</button>
         </div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
           <div style="padding:18px;border:1px solid var(--border);border-radius:12px;text-align:center">
             <div style="font-size:28px;margin-bottom:8px">📱</div>
-            <div style="font-size:14px;font-weight:500">手機AR試穿</div>
-            <div style="font-size:12px;color:var(--mid)">鏡頭即時試衣</div>
+            <div style="font-size:14px;font-weight:500" data-i18n="ar_cam">手機AR試穿</div>
+            <div style="font-size:12px;color:var(--mid)" data-i18n="ar_cam_sub">鏡頭即時試衣</div>
           </div>
           <div style="padding:18px;border:1px solid var(--border);border-radius:12px;text-align:center">
             <div style="font-size:28px;margin-bottom:8px">🖼️</div>
-            <div style="font-size:14px;font-weight:500">AI換裝生成</div>
-            <div style="font-size:12px;color:var(--mid)">上傳照片即換衣</div>
+            <div style="font-size:14px;font-weight:500" data-i18n="ar_ai">AI換裝生成</div>
+            <div style="font-size:12px;color:var(--mid)" data-i18n="ar_ai_sub">上傳照片即換衣</div>
           </div>
         </div>
       </div>
 
       <!-- METAVERSE TAB -->
       <div id="tab-meta" class="content-panel">
-        <div class="section-header"><h2>元宇宙時尚社區</h2><p>Q5 概念 — 「我看到我穿到」</p></div>
+        <div class="section-header">
+          <h2 data-i18n="meta_h2">元宇宙時尚社區</h2>
+          <p data-i18n="meta_coming">Q5 概念 — 「我看到我穿到」</p>
+        </div>
         <div class="meta-container">
           <div class="meta-icon">🌐</div>
-          <div class="meta-title">穿上你喜歡的衣服，結交朋友</div>
-          <div class="meta-sub">Upload真實樣子，AI塑造理想身體，配搭你夢想的時裝</div>
+          <div class="meta-title" data-i18n="meta_title">穿上你喜歡的衣服，結交朋友</div>
+          <div class="meta-sub" data-i18n="meta_sub">Upload真實樣子，AI塑造理想身體，配搭你夢想的時裝</div>
           <div class="meta-features">
-            <span class="meta-feat">👥 朋友交流區</span>
-            <span class="meta-feat">💎 VIP解鎖更多配搭</span>
-            <span class="meta-feat">👑 名牌虛擬試穿</span>
-            <span class="meta-feat">🎮 時尚遊戲化</span>
+            <span class="meta-feat" data-i18n="meta_f1">👥 朋友交流區</span>
+            <span class="meta-feat" data-i18n="meta_f2">💎 VIP解鎖更多配搭</span>
+            <span class="meta-feat" data-i18n="meta_f3">👑 名牌虛擬試穿</span>
+            <span class="meta-feat" data-i18n="meta_f4">🎮 時尚遊戲化</span>
           </div>
         </div>
-        <button class="btn-primary" style="width:100%;margin-top:8px">登記搶先體驗</button>
+        <button class="btn-primary" style="width:100%;margin-top:8px" data-i18n="meta_join">登記搶先體驗</button>
       </div>
 
-    </div><!-- end main-content -->
-  </div><!-- end main-layout -->
-</div><!-- end s-main -->
+    </div>
+  </div>
+</div>
 
 <!-- Rating Modal -->
 <div class="modal-overlay" id="rating-modal">
   <div class="modal">
-    <div class="modal-title">評價今日配搭</div>
-    <div class="modal-sub">你的評分幫助AI越來越了解你 💛（滿意度調查 · 每次必填）</div>
+    <div class="modal-title" data-i18n="rating_title">評價今日配搭</div>
+    <div class="modal-sub" data-i18n="rating_sub">你的評分幫助AI越來越了解你 💛（滿意度調查 · 每次必填）</div>
     <div class="rating-row">
-      <div class="rating-label"><span>顏色</span></div>
+      <div class="rating-label"><span data-i18n="r_colour">顏色</span></div>
       <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
     </div>
     <div class="rating-row">
-      <div class="rating-label"><span>款式 / 版型</span></div>
+      <div class="rating-label"><span data-i18n="r_style">款式 / 版型</span></div>
       <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
     </div>
     <div class="rating-row">
-      <div class="rating-label"><span>品牌 / 風格</span></div>
+      <div class="rating-label"><span data-i18n="r_brand">品牌 / 風格</span></div>
       <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
     </div>
     <div class="rating-row">
-      <div class="rating-label"><span>價格接受度</span></div>
+      <div class="rating-label"><span data-i18n="r_price">價格接受度</span></div>
       <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
     </div>
     <div class="rating-row">
-      <div class="rating-label"><span>材質</span></div>
+      <div class="rating-label"><span data-i18n="r_material">材質</span></div>
       <div class="stars"><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span><span class="star" onclick="rateStar(this)">⭐</span></div>
     </div>
     <div class="rating-row" style="margin-top:12px">
-      <div class="rating-label" style="font-weight:600">會否購買？</div>
+      <div class="rating-label" style="font-weight:600" data-i18n="r_buy_q">會否購買？</div>
       <div style="display:flex;gap:8px;margin-top:4px">
-        <button class="chip" onclick="this.classList.toggle('selected')">會買 ✓</button>
-        <button class="chip" onclick="this.classList.toggle('selected')">也許</button>
-        <button class="chip" onclick="this.classList.toggle('selected')">不會</button>
+        <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="r_yes">會買 ✓</button>
+        <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="r_maybe">也許</button>
+        <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="r_no">不會</button>
       </div>
     </div>
     <div style="background:var(--cream);border-radius:10px;padding:12px;margin-top:14px;font-size:12px;color:var(--mid)">
-      MM解決你日常搭配的煩惱嗎？
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="chip" onclick="this.classList.toggle('selected')">😍 非常有幫助</button>
-        <button class="chip" onclick="this.classList.toggle('selected')">😐 一般</button>
-        <button class="chip" onclick="this.classList.toggle('selected')">😕 未夠好</button>
+      <span data-i18n="r_mm_q">MM解決你日常搭配的煩惱嗎？</span>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="r_great">😍 非常有幫助</button>
+        <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="r_ok_chip">😐 一般</button>
+        <button class="chip" onclick="this.classList.toggle('selected')" data-i18n="r_bad">😕 未夠好</button>
       </div>
     </div>
     <div class="modal-actions">
-      <button class="btn-outline" onclick="closeModal()">跳過</button>
-      <button class="btn-primary" style="flex:1" onclick="submitRating()">提交評分 →</button>
+      <button class="btn-outline" onclick="closeModal()" data-i18n="r_skip">跳過</button>
+      <button class="btn-primary" style="flex:1" onclick="submitRating()" data-i18n="r_submit">提交評分 →</button>
     </div>
   </div>
 </div>
 
 <script>
-// Navigation
-function go(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-
-// Tab switching
-function switchTab(btn, panelId) {
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  switchPanel(panelId);
-}
-function switchSidebar(btn, panelId) {
-  document.querySelectorAll('.sidebar-item').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  switchPanel(panelId);
-}
-function switchPanel(id) {
-  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-  const panel = document.getElementById(id);
-  if (panel) panel.classList.add('active');
-}
-
-// Onboarding selectors
-function selectTone(el, tone) {
-  el.closest('.tone-grid').querySelectorAll('.tone-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selectSeason(el) {
-  el.closest('.season-grid').querySelectorAll('.season-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selectBudget(el) {
-  el.closest('.budget-list').querySelectorAll('.budget-option').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selectCdepth(el) {
-  el.closest('.colour-depth-row').querySelectorAll('.cdepth-option').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-// ══════════════════════════════════════
-// i18n — bilingual dictionary
-// ══════════════════════════════════════
 const i18n = {
   zh: {
-    // Landing
-    landing_tag: 'Q1 2026 推出 · Freemium',
-    landing_h1: 'Your AI<br><em>Style BFF</em>',
-    landing_sub: '四季膚色分析 · 智能穿搭 · AR虛擬試衣 · 元宇宙時尚社區',
-    feat_q1: '🌸 Q1 膚色體型分析',
-    feat_q2: '👗 Q2 智能衣物配搭',
-    feat_q3: '🏪 Q3 品牌KOL合作',
-    feat_q4: '🥽 Q4 AR試衣間',
-    feat_q5: '🌐 Q5 元宇宙',
-    landing_cta_start: '開始我的風格之旅 ✦',
-    landing_cta_enter: '直接進入 App →',
-    // Nav
-    nav_today: '今日', nav_chat: '對話', nav_wardrobe: '衣櫥', nav_map: '地圖',
-    // Sidebar
-    sb_main: '主要功能', sb_today: '今日配搭', sb_chat: 'AI造型對話',
-    sb_wardrobe: '我的衣櫥', sb_dna: '風格DNA', sb_more: '更多功能',
-    sb_map: '附近店鋪', sb_ar: 'AR試衣間', sb_meta: '元宇宙',
-    // Onboarding step labels
-    step_of: '步，共 5 步', step_pre: '第 ',
-    tone_label: 'Step 01 — 選擇你的Stylist風格',
-    tone_title: '你想要哪種造型師？',
-    tone_sub: '不同風格的AI造型師為你提供個性化建議',
-    tone_next: '繼續 →', tone_back: '← 返回',
-    body_label: 'Step 02 — 上傳照片 + 身體數據',
-    body_title: '讓我了解你的身型',
-    body_sub: '上傳全身照，AI會分析你的身型比例。所有數據嚴格保密。',
-    upload_title: '上傳全身照 / 半身照',
-    upload_hint: '支援 JPG、PNG · 建議在自然光下拍攝',
-    height_label: '身高 (cm)', weight_label: '體重 (kg)',
-    bust_label: '胸圍 (cm) — 選填', waist_label: '腰圍 (cm) — 選填',
-    body_hint: 'AI分析身型：X型 / O型 / H型 / A型 / V型 · 數據同步亞洲/歐美趨勢庫',
-    season_label: 'Step 03 — 16型四季膚色分析',
-    season_title: '你是哪個季節型？',
-    season_sub: '根據膚色、髮色、眼色判斷最適合你的色彩家族',
-    palette_label: '🌸 Spring 型推薦配色',
-    palette_hint: '你的專屬色板',
-    style_label: 'Step 04 — 風格偏好 + 品牌哲學',
-    style_title: '你的穿衣風格',
-    style_sub: '可以選多個',
-    motto_label: '品牌哲學 — 用 Motto 代替品牌名做混搭',
-    vintage_label_main: '🎞️ 包含古著 / 二手衣物',
-    vintage_label_sub: '博物館 · Vintage Shop · 二手平台',
-    cdepth_label: '顏色深淺偏好',
-    tag_label: '個性標籤 — MBTI / 星座 / 生肖',
-    budget_label: 'Step 05 — 預算設定',
-    budget_title: '每月服裝預算',
-    budget_sub: 'AI會根據預算為你推薦最適合的選項',
-    budget_cta: '生成我的風格DNA ✦',
-    // Today tab
-    today_h2: '今日3套配搭',
-    today_sub: '根據天氣·膚色·場合為你精選',
-    weather_desc: '多雲 · 適合外出', occasion: '今日：Casual Friday',
-    deal_badge: '每日限定',
-    deal_item: 'UNIQLO 輕便羽絨背心 — 你的Spring型必備款',
-    outfit_select: '選擇此配搭', outfit_buy: '購買連結',
-    badge_ai: 'AI首選',
-    outfit1_name: 'Casual Romantic', outfit1_desc: '奶油白針織外套 + 碎花裙 + 白波鞋',
-    outfit2_name: 'Minimal Chic', outfit2_desc: '灰色西裝外套 + 白Tee + 粉色闊腿褲',
-    outfit3_name: 'Forest Vibe', outfit3_desc: '橄欖綠針織 + 棕色皮褲 + 托特包',
-    kol_heading: '🔍 讓KOL / 造型師為你搜索配搭',
-    kol_placeholder: '搜索造型師、KOL、藝術家的版本…',
-    kol_hint: 'KOL分享後，MM會收集數據並生成相似配搭供未來參考',
-    score_title: '今日配搭評分 — AI分析',
-    score_colour: '配色適宜度', score_trend: '流行度', score_body: '身型表現度',
-    score_occasion: '場合契合度', score_ratio: '6:3:1配色比例',
-    ratio_base: '60% 基調', ratio_accent: '30% 輔助',
-    // Chat tab
-    chat_h2: 'AI造型師對話', chat_sub: '隨時問我任何關於穿搭的問題',
-    chat_placeholder: '問我任何穿搭問題… 例：下週面試著咩好？',
-    chat_greeting: '噚日條裙係咁，今日？姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！今日幫你揀咗3套，你話邊套最啱心水？😝',
-    // Wardrobe tab
-    ward_h2: '我的衣櫥', ward_sub: '32件單品 · AI已分類整理',
-    ward_all: '全部', ward_top: '上衣', ward_outer: '外套',
-    ward_bottom: '裙/褲', ward_shoes: '鞋履', ward_acc: '配飾', ward_vintage: '古著',
-    ward_upload: '上傳衣物', ward_gap: 'AI建議補充',
-    // DNA tab
-    dna_h2: '我的風格DNA', dna_sub: 'AI分析你的穿搭個性',
-    dna_title: 'Spring × Romantic-Minimal',
-    stat_colour: '配色適宜度', stat_body: '身型表現度', stat_count: '衣物件數',
-    sat_title: '滿意度調查',
-    sat_q: 'AI幫你解決日常搭配的煩惱嗎？',
-    sat_ok: '😐 一般', sat_good: '😍 很滿意',
-    // Map tab
-    map_h2: '附近店鋪', map_sub: '即刻去買，唔使等快遞',
-    you_here: '你在這',
-    // AR tab
-    ar_h2: 'AR虛擬試衣間', ar_coming: 'Q4 即將推出',
-    ar_title: 'VR Closet — 虛擬衣櫥',
-    ar_sub: '用AR試穿任何衣物，不需要實體試衣室\nFreemium · 基礎功能免費',
-    ar_join: '加入等候名單',
-    ar_cam: '手機AR試穿', ar_cam_sub: '鏡頭即時試衣',
-    ar_ai: 'AI換裝生成', ar_ai_sub: '上傳照片即換衣',
-    // Meta tab
-    meta_h2: '元宇宙時尚社區', meta_coming: 'Q5 概念 — 「我看到我穿到」',
-    meta_title: '穿上你喜歡的衣服，結交朋友',
-    meta_sub: 'Upload真實樣子，AI塑造理想身體，配搭你夢想的時裝',
-    meta_join: '登記搶先體驗',
-    // Rating modal
-    rating_title: '評價今日配搭',
-    rating_sub: '你的評分幫助AI越來越了解你 💛（滿意度調查 · 每次必填）',
-    r_colour: '顏色', r_style: '款式 / 版型', r_brand: '品牌 / 風格',
-    r_price: '價格接受度', r_material: '材質',
-    r_buy_q: '會否購買？', r_yes: '會買 ✓', r_maybe: '也許', r_no: '不會',
-    r_mm_q: 'MM解決你日常搭配的煩惱嗎？',
-    r_great: '😍 非常有幫助', r_ok: '😐 一般', r_bad: '😕 未夠好',
-    r_skip: '跳過', r_submit: '提交評分 →',
-    // Affiliate toast
-    aff_toast: '🔗 購買連結已複製 · 你的購買數據將被記錄',
-    // Upload states
-    upload_loading: 'AI分析中…', upload_hint2: '識別身型：X型 · 膚色：Spring暖色',
-    upload_done: '分析完成！X型身型 · Spring膚色', upload_retry: '點擊重新上傳',
-    // Theme title
-    theme_default: '默認', theme_tech: '未來科技', theme_warm: '溫暖專業',
+    landing_tag:'Q1 2026 推出 · Freemium',
+    landing_h1:'Your AI<br><em>Style BFF</em>',
+    landing_sub:'四季膚色分析 · 智能穿搭 · AR虛擬試衣 · 元宇宙時尚社區',
+    feat_q1:'🌸 Q1 膚色體型分析', feat_q2:'👗 Q2 智能衣物配搭',
+    feat_q3:'🏪 Q3 品牌KOL合作', feat_q4:'🥽 Q4 AR試衣間', feat_q5:'🌐 Q5 元宇宙',
+    cta_start:'開始我的風格之旅 ✦', cta_enter:'直接進入 App →',
+    nav_today:'今日', nav_chat:'對話', nav_wardrobe:'衣櫥', nav_map:'地圖',
+    tone_qlabel:'Step 01 — 選擇你的Stylist風格',
+    tone_title:'你想要哪種造型師？',
+    tone_sub:'不同風格的AI造型師為你提供個性化建議',
+    tone_bestie_name:'閨蜜版', tone_bestie_desc:'輕鬆親切，真心話',
+    tone_mean_name:'Mean精版', tone_mean_desc:'廣東話犀利點評',
+    tone_pro_name:'專業造型師', tone_pro_desc:'業界標準建議',
+    tone_paris_name:'巴黎時尚風', tone_paris_desc:'Less is more',
+    tone_kol_name:'KOL網紅版', tone_kol_desc:'潮流前線資訊',
+    tone_vintage_name:'古著達人版', tone_vintage_desc:'Vintage & 小眾',
+    btn_next:'繼續 →', btn_back:'← 返回',
+    body_qlabel:'Step 02 — 上傳照片 + 身體數據',
+    body_title:'讓我了解你的身型',
+    body_sub:'上傳全身照，AI會分析你的身型比例。所有數據嚴格保密。',
+    upload_title:'上傳全身照 / 半身照',
+    upload_hint:'支援 JPG、PNG · 建議在自然光下拍攝',
+    height_label:'身高 (cm)', weight_label:'體重 (kg)',
+    bust_label:'胸圍 (cm) — 選填', waist_label:'腰圍 (cm) — 選填',
+    body_hint:'AI分析身型：X型 / O型 / H型 / A型 / V型 · 數據同步亞洲/歐美趨勢庫',
+    season_qlabel:'Step 03 — 16型四季膚色分析',
+    season_title:'你是哪個季節型？',
+    season_sub:'根據膚色、髮色、眼色判斷最適合你的色彩家族',
+    spring_name:'Spring 春', spring_tone:'暖色系·明亮',
+    summer_name:'Summer 夏', summer_tone:'冷色系·柔和',
+    autumn_name:'Autumn 秋', autumn_tone:'暖色系·深沉',
+    winter_name:'Winter 冬', winter_tone:'冷色系·對比強',
+    palette_label:'🌸 Spring 型推薦配色', palette_hint:'你的專屬色板',
+    style_qlabel:'Step 04 — 風格偏好 + 品牌哲學',
+    style_title:'你的穿衣風格', style_sub:'可以選多個',
+    sty_romantic:'浪漫系', sty_romantic_d:'花卉·蕾絲·飄逸',
+    sty_minimal:'極簡主義', sty_minimal_d:'俐落·中性·Clean',
+    sty_forest:'森林系', sty_forest_d:'自然·棉麻·大地色',
+    sty_cottage_d:'田園·刺繡·復古', sty_local:'本地風格',
+    sty_vintage:'Vintage / 古著', sty_vintage_d:'博物館·二手店·小眾',
+    motto_label:'品牌哲學 — 用 Motto 代替品牌名做混搭',
+    vintage_main:'🎞️ 包含古著 / 二手衣物',
+    vintage_sub:'博物館 · Vintage Shop · 二手平台',
+    cdepth_label:'顏色深淺偏好',
+    cd_dark:'深色系', cd_mid:'中性色', cd_light:'淺色系', cd_bright:'明亮鮮色', cd_muted:'灰暗霧感',
+    tag_label:'個性標籤 — MBTI / 星座 / 生肖',
+    zodiac_aries:'♈ 白羊', zodiac_virgo:'♍ 處女', zodiac_libra:'♎ 天秤',
+    cz_dragon:'🐉 龍年', cz_rabbit:'🐰 兔年', cz_snake:'🐍 蛇年',
+    tag_hp:'Harry Potter風', tag_queen:'本地Queen風', tag_fairy:'仙女系', tag_maximal:'極繁主義',
+    budget_qlabel:'Step 05 — 預算設定',
+    budget_title:'每月服裝預算',
+    budget_sub:'AI會根據預算為你推薦最適合的選項',
+    b1_label:'HK$100 以下', b1_desc:'實惠精選 · 二手好貨', b2_desc:'高性價比品牌',
+    b3_desc:'中端品牌 · UNIQLO等', b4_desc:'輕奢品牌', b5_desc:'設計師品牌', b6_desc:'奢侈品 · Dior · LV',
+    budget_cta:'生成我的風格DNA ✦',
+    profile_dna:'Spring · X型身型 · 浪漫極簡混搭',
+    sb_main:'主要功能', sb_today:'今日配搭', sb_chat:'AI造型對話',
+    sb_wardrobe:'我的衣櫥', sb_dna:'風格DNA', sb_more:'更多功能',
+    sb_map:'附近店鋪', sb_ar:'AR試衣間', sb_meta:'元宇宙',
+    weather_desc:'多雲 · 適合外出', occasion:'今日：Casual Friday',
+    deal_badge:'每日限定', deal_item:'UNIQLO 輕便羽絨背心 — 你的Spring型必備款',
+    today_h2:'今日3套配搭', today_sub:'根據天氣·膚色·場合為你精選',
+    badge_ai:'AI首選',
+    outfit1_name:'Casual Romantic', outfit1_desc:'奶油白針織外套 + 碎花裙 + 白波鞋',
+    outfit2_name:'Minimal Chic', outfit2_desc:'灰色西裝外套 + 白Tee + 粉色闊腿褲',
+    outfit3_name:'Forest Vibe', outfit3_desc:'橄欖綠針織 + 棕色皮褲 + 托特包',
+    score_colour_short:'配色', score_92:'92分', score_87:'87分', score_83:'83分',
+    outfit_select:'選擇此配搭', outfit_buy:'購買連結', aff_track:'追蹤',
+    kol_heading:'🔍 讓KOL / 造型師為你搜索配搭',
+    kol_placeholder:'搜索造型師、KOL、藝術家的版本…',
+    kol_hint:'KOL分享後，MM會收集數據並生成相似配搭供未來參考',
+    score_title:'今日配搭評分 — AI分析',
+    score_colour:'配色適宜度', score_trend:'流行度', score_body:'身型表現度',
+    score_occasion:'場合契合度', score_ratio:'6:3:1配色比例',
+    ratio_base:'60% 基調', ratio_accent:'30% 輔助',
+    chat_h2:'AI造型師對話', chat_sub:'隨時問我任何關於穿搭的問題',
+    tone_mean_btn:'💅 Mean精版', tone_bestie_btn:'🥂 閨蜜版', tone_pro_btn:'👔 專業版', tone_kol_btn:'📸 KOL版',
+    chat_greeting:'噚日條裙係咁，今日？姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！今日幫你揀咗3套，你話邊套最啱心水？😝',
+    chat_placeholder:'問我任何穿搭問題… 例：下週面試著咩好？',
+    ward_h2:'我的衣櫥', ward_sub:'32件單品 · AI已分類整理',
+    ward_all:'全部', ward_top:'上衣', ward_outer:'外套', ward_bottom:'裙/褲',
+    ward_shoes:'鞋履', ward_acc:'配飾', ward_vintage:'古著',
+    ward_upload:'上傳衣物', ward_gap:'AI建議補充',
+    wi_knit:'針織外套', wi_cream:'奶油白', wi_floral:'碎花裙', wi_pink:'粉底花紋',
+    wi_scarf:'圍巾', wi_olive:'橄欖綠', wi_blazer:'西裝外套', wi_grey:'灰色',
+    wi_sneaker:'波鞋', wi_white:'白色', wi_tote:'托特包', wi_brown:'棕色', wi_gap:'缺少：中性風褸',
+    dna_h2:'我的風格DNA', dna_sub:'AI分析你的穿搭個性',
+    dna_title:'Spring × Romantic-Minimal',
+    dna_tag1:'Spring暖色型', dna_tag2:'X型身型', dna_tag3:'浪漫極簡混搭',
+    stat_colour:'配色適宜度', stat_body:'身型表現度', stat_count:'衣物件數',
+    sat_title:'滿意度調查', sat_q:'AI幫你解決日常搭配的煩惱嗎？', sat_ok:'😐 一般', sat_good:'😍 很滿意',
+    map_h2:'附近店鋪', map_sub:'即刻去買，唔使等快遞', you_here:'你在這',
+    shop1_loc:'銅鑼灣', shop1_info:'備貨充足 · 你的AI推薦款有貨',
+    shop2_info:'小眾古著店 · 全店已掃描入庫',
+    shop3_loc:'時代廣場', shop3_info:'本季新款 · KOL合作款',
+    shop4_name:'本地設計師 Popup', shop4_info:'HK本地品牌 · 獨家聯名',
+    ar_h2:'AR虛擬試衣間', ar_coming:'Q4 即將推出',
+    ar_title:'VR Closet — 虛擬衣櫥',
+    ar_sub:'用AR試穿任何衣物，不需要實體試衣室<br>Freemium · 基礎功能免費',
+    ar_join:'加入等候名單', ar_cam:'手機AR試穿', ar_cam_sub:'鏡頭即時試衣', ar_ai:'AI換裝生成', ar_ai_sub:'上傳照片即換衣',
+    meta_h2:'元宇宙時尚社區', meta_coming:'Q5 概念 — 「我看到我穿到」',
+    meta_title:'穿上你喜歡的衣服，結交朋友',
+    meta_sub:'Upload真實樣子，AI塑造理想身體，配搭你夢想的時裝',
+    meta_f1:'👥 朋友交流區', meta_f2:'💎 VIP解鎖更多配搭', meta_f3:'👑 名牌虛擬試穿', meta_f4:'🎮 時尚遊戲化',
+    meta_join:'登記搶先體驗',
+    rating_title:'評價今日配搭',
+    rating_sub:'你的評分幫助AI越來越了解你 💛（滿意度調查 · 每次必填）',
+    r_colour:'顏色', r_style:'款式 / 版型', r_brand:'品牌 / 風格',
+    r_price:'價格接受度', r_material:'材質',
+    r_buy_q:'會否購買？', r_yes:'會買 ✓', r_maybe:'也許', r_no:'不會',
+    r_mm_q:'MM解決你日常搭配的煩惱嗎？',
+    r_great:'😍 非常有幫助', r_ok_chip:'😐 一般', r_bad:'😕 未夠好',
+    r_skip:'跳過', r_submit:'提交評分 →',
+    upload_loading:'AI分析中…', upload_scanning:'識別身型：X型 · 膚色：Spring暖色',
+    upload_done:'分析完成！X型身型 · Spring膚色', upload_retry:'點擊重新上傳',
+    aff_toast:'🔗 購買連結已複製 · 你的購買數據將被記錄',
   },
-
   en: {
-    // Landing
-    landing_tag: 'Launching Q1 2026 · Freemium',
-    landing_h1: 'Your AI<br><em>Style BFF</em>',
-    landing_sub: 'Season Colour Analysis · Smart Outfits · AR Try-On · Metaverse Fashion',
-    feat_q1: '🌸 Q1 Colour & Body Analysis',
-    feat_q2: '👗 Q2 Smart Outfit Matching',
-    feat_q3: '🏪 Q3 Brand & KOL Collabs',
-    feat_q4: '🥽 Q4 AR Fitting Room',
-    feat_q5: '🌐 Q5 Metaverse',
-    landing_cta_start: 'Start My Style Journey ✦',
-    landing_cta_enter: 'Enter App →',
-    // Nav
-    nav_today: 'Today', nav_chat: 'Chat', nav_wardrobe: 'Wardrobe', nav_map: 'Map',
-    // Sidebar
-    sb_main: 'Main', sb_today: 'Today\'s Outfits', sb_chat: 'AI Stylist Chat',
-    sb_wardrobe: 'My Wardrobe', sb_dna: 'Style DNA', sb_more: 'More',
-    sb_map: 'Nearby Shops', sb_ar: 'AR Fitting Room', sb_meta: 'Metaverse',
-    // Onboarding
-    step_of: ' of 5', step_pre: 'Step ',
-    tone_label: 'Step 01 — Choose Your Stylist Vibe',
-    tone_title: 'What kind of AI stylist do you want?',
-    tone_sub: 'Each tone gives you a different style of personalised advice',
-    tone_next: 'Continue →', tone_back: '← Back',
-    body_label: 'Step 02 — Upload Photo + Body Data',
-    body_title: 'Let me understand your body shape',
-    body_sub: 'Upload a full-body photo. AI will analyse your proportions. All data is strictly private.',
-    upload_title: 'Upload Full Body / Half Body Photo',
-    upload_hint: 'JPG or PNG · Natural light recommended',
-    height_label: 'Height (cm)', weight_label: 'Weight (kg)',
-    bust_label: 'Bust (cm) — Optional', waist_label: 'Waist (cm) — Optional',
-    body_hint: 'AI analyses body shape: X / O / H / A / V type · Synced with Asian & Western trend data',
-    season_label: 'Step 03 — 16-Type Season Colour Analysis',
-    season_title: 'Which season type are you?',
-    season_sub: 'Based on your skin tone, hair and eye colour',
-    palette_label: '🌸 Spring Type Recommended Palette',
-    palette_hint: 'Your personal colour palette',
-    style_label: 'Step 04 — Style Preferences + Brand Philosophy',
-    style_title: 'Your dressing style',
-    style_sub: 'Select all that apply',
-    motto_label: 'Brand Philosophy — Mix & match by motto, not brand name',
-    vintage_label_main: '🎞️ Include Vintage / Second-hand',
-    vintage_label_sub: 'Museums · Vintage Shops · Resale Platforms',
-    cdepth_label: 'Colour Depth Preference',
-    tag_label: 'Personality Tags — MBTI / Zodiac / Chinese Zodiac',
-    budget_label: 'Step 05 — Budget',
-    budget_title: 'Monthly clothing budget',
-    budget_sub: 'AI will recommend options that fit your budget',
-    budget_cta: 'Generate My Style DNA ✦',
-    // Today
-    today_h2: 'Today\'s 3 Outfits',
-    today_sub: 'Curated for your weather · skin tone · occasion',
-    weather_desc: 'Cloudy · Great day to go out', occasion: 'Today: Casual Friday',
-    deal_badge: 'Daily Deal',
-    deal_item: 'UNIQLO Light Down Vest — Essential for your Spring type',
-    outfit_select: 'Choose this look', outfit_buy: 'Buy Link',
-    badge_ai: 'AI Pick',
-    outfit1_name: 'Casual Romantic', outfit1_desc: 'Cream knit jacket + floral skirt + white sneakers',
-    outfit2_name: 'Minimal Chic', outfit2_desc: 'Grey blazer + white tee + pink wide-leg trousers',
-    outfit3_name: 'Forest Vibe', outfit3_desc: 'Olive knit + brown leather trousers + tote bag',
-    kol_heading: '🔍 Let a KOL / Stylist curate your look',
-    kol_placeholder: 'Search stylists, KOLs, artists…',
-    kol_hint: 'After a KOL shares, MM collects data to generate similar looks in future',
-    score_title: 'Today\'s Outfit Score — AI Analysis',
-    score_colour: 'Colour suitability', score_trend: 'Trend score', score_body: 'Body flattery',
-    score_occasion: 'Occasion fit', score_ratio: '6:3:1 colour ratio',
-    ratio_base: '60% Base', ratio_accent: '30% Accent',
-    // Chat
-    chat_h2: 'AI Stylist Chat', chat_sub: 'Ask me anything about outfits, anytime',
-    chat_placeholder: 'Ask anything… e.g. What should I wear to an interview?',
-    chat_greeting: 'Hey gorgeous! You\'re a Spring type — warm tones are your best friend. I\'ve picked 3 looks for you today. Which one speaks to you? 😝',
-    // Wardrobe
-    ward_h2: 'My Wardrobe', ward_sub: '32 items · AI organised',
-    ward_all: 'All', ward_top: 'Tops', ward_outer: 'Outerwear',
-    ward_bottom: 'Skirts/Trousers', ward_shoes: 'Shoes', ward_acc: 'Accessories', ward_vintage: 'Vintage',
-    ward_upload: 'Upload Item', ward_gap: 'AI suggests adding',
-    // DNA
-    dna_h2: 'My Style DNA', dna_sub: 'AI analysis of your fashion personality',
-    dna_title: 'Spring × Romantic-Minimal',
-    stat_colour: 'Colour score', stat_body: 'Body flattery', stat_count: 'Items',
-    sat_title: 'Satisfaction Survey',
-    sat_q: 'Does MM solve your daily outfit struggles?',
-    sat_ok: '😐 So-so', sat_good: '😍 Love it',
-    // Map
-    map_h2: 'Nearby Shops', map_sub: 'Buy it now, skip the delivery wait',
-    you_here: 'You are here',
-    // AR
-    ar_h2: 'AR Fitting Room', ar_coming: 'Coming Q4',
-    ar_title: 'VR Closet — Virtual Wardrobe',
-    ar_sub: 'Try on anything virtually — no physical fitting room needed\nFreemium · Basic features free',
-    ar_join: 'Join Waitlist',
-    ar_cam: 'Phone AR Try-On', ar_cam_sub: 'Live camera fitting',
-    ar_ai: 'AI Outfit Swap', ar_ai_sub: 'Upload photo, swap outfit',
-    // Meta
-    meta_h2: 'Metaverse Fashion Community', meta_coming: 'Q5 Concept — "See it, Wear it"',
-    meta_title: 'Dress how you want. Make friends.',
-    meta_sub: 'Upload your real look. AI sculpts your ideal body. Style it with your dream wardrobe.',
-    meta_join: 'Register for Early Access',
-    // Rating
-    rating_title: 'Rate Today\'s Outfit',
-    rating_sub: 'Your ratings help AI understand you better 💛',
-    r_colour: 'Colour', r_style: 'Style / Cut', r_brand: 'Brand / Vibe',
-    r_price: 'Price acceptability', r_material: 'Material',
-    r_buy_q: 'Would you buy it?', r_yes: 'Yes ✓', r_maybe: 'Maybe', r_no: 'No',
-    r_mm_q: 'Does MM solve your daily outfit struggles?',
-    r_great: '😍 Very helpful', r_ok: '😐 So-so', r_bad: '😕 Needs work',
-    r_skip: 'Skip', r_submit: 'Submit Rating →',
-    // Affiliate
-    aff_toast: '🔗 Link copied · Your purchase data will be recorded',
-    // Upload states
-    upload_loading: 'AI analysing…', upload_hint2: 'Detecting: X-shape body · Spring skin tone',
-    upload_done: 'Analysis complete! X-shape · Spring tone', upload_retry: 'Tap to re-upload',
-    // Theme
-    theme_default: 'Default', theme_tech: 'Tech / Future', theme_warm: 'Warm / Pro',
+    landing_tag:'Launching Q1 2026 · Freemium',
+    landing_h1:'Your AI<br><em>Style BFF</em>',
+    landing_sub:'Season Colour Analysis · Smart Outfits · AR Try-On · Metaverse Fashion',
+    feat_q1:'🌸 Q1 Colour & Body Analysis', feat_q2:'👗 Q2 Smart Outfit Matching',
+    feat_q3:'🏪 Q3 Brand & KOL Collabs', feat_q4:'🥽 Q4 AR Fitting Room', feat_q5:'🌐 Q5 Metaverse',
+    cta_start:'Start My Style Journey ✦', cta_enter:'Enter App →',
+    nav_today:'Today', nav_chat:'Chat', nav_wardrobe:'Wardrobe', nav_map:'Map',
+    tone_qlabel:'Step 01 — Choose Your Stylist Vibe',
+    tone_title:'What kind of AI stylist do you want?',
+    tone_sub:'Each style gives you a different kind of personalised advice',
+    tone_bestie_name:'BFF Mode', tone_bestie_desc:'Warm, honest & fun',
+    tone_mean_name:'Mean Girl Mode', tone_mean_desc:'Brutally honest reviews',
+    tone_pro_name:'Professional Stylist', tone_pro_desc:'Industry-standard advice',
+    tone_paris_name:'Parisian Chic', tone_paris_desc:'Less is more',
+    tone_kol_name:'KOL / Influencer', tone_kol_desc:'Front-row trend info',
+    tone_vintage_name:'Vintage Expert', tone_vintage_desc:'Vintage & niche picks',
+    btn_next:'Continue →', btn_back:'← Back',
+    body_qlabel:'Step 02 — Upload Photo + Body Data',
+    body_title:'Let me understand your body shape',
+    body_sub:'Upload a full-body photo. AI will analyse your proportions. All data is strictly private.',
+    upload_title:'Upload Full Body / Half Body Photo',
+    upload_hint:'JPG or PNG · Natural light recommended',
+    height_label:'Height (cm)', weight_label:'Weight (kg)',
+    bust_label:'Bust (cm) — Optional', waist_label:'Waist (cm) — Optional',
+    body_hint:'AI analyses body shape: X / O / H / A / V type · Synced with Asian & Western trend data',
+    season_qlabel:'Step 03 — 16-Type Season Colour Analysis',
+    season_title:'Which season type are you?',
+    season_sub:'Based on your skin tone, hair colour and eye colour',
+    spring_name:'Spring', spring_tone:'Warm · Bright',
+    summer_name:'Summer', summer_tone:'Cool · Soft',
+    autumn_name:'Autumn', autumn_tone:'Warm · Deep',
+    winter_name:'Winter', winter_tone:'Cool · High contrast',
+    palette_label:'🌸 Spring Type Recommended Palette', palette_hint:'Your personal colour palette',
+    style_qlabel:'Step 04 — Style Preferences + Brand Philosophy',
+    style_title:'Your dressing style', style_sub:'Select all that apply',
+    sty_romantic:'Romantic', sty_romantic_d:'Florals · Lace · Flowing',
+    sty_minimal:'Minimalist', sty_minimal_d:'Clean · Neutral · Sharp',
+    sty_forest:'Forest / Nature', sty_forest_d:'Natural · Linen · Earthy',
+    sty_cottage_d:'Pastoral · Embroidery · Vintage', sty_local:'Local Style',
+    sty_vintage:'Vintage / Secondhand', sty_vintage_d:'Museums · Thrift · Niche',
+    motto_label:'Brand Philosophy — Mix & match by motto, not brand name',
+    vintage_main:'🎞️ Include Vintage / Second-hand',
+    vintage_sub:'Museums · Vintage Shops · Resale Platforms',
+    cdepth_label:'Colour Depth Preference',
+    cd_dark:'Dark tones', cd_mid:'Neutral tones', cd_light:'Light tones', cd_bright:'Bright & vivid', cd_muted:'Muted & hazy',
+    tag_label:'Personality Tags — MBTI / Zodiac / Chinese Zodiac',
+    zodiac_aries:'♈ Aries', zodiac_virgo:'♍ Virgo', zodiac_libra:'♎ Libra',
+    cz_dragon:'🐉 Year of Dragon', cz_rabbit:'🐰 Year of Rabbit', cz_snake:'🐍 Year of Snake',
+    tag_hp:'Harry Potter aesthetic', tag_queen:'Local Queen style', tag_fairy:'Fairy / Cottagecore', tag_maximal:'Maximalist',
+    budget_qlabel:'Step 05 — Budget',
+    budget_title:'Monthly clothing budget',
+    budget_sub:'AI will recommend options that fit your budget',
+    b1_label:'Under HK$100', b1_desc:'Budget picks · Secondhand gems', b2_desc:'Great value brands',
+    b3_desc:'Mid-range · UNIQLO etc.', b4_desc:'Accessible luxury', b5_desc:'Designer brands', b6_desc:'Luxury · Dior · LV',
+    budget_cta:'Generate My Style DNA ✦',
+    profile_dna:'Spring · X-shape · Romantic Minimalist',
+    sb_main:'Main', sb_today:"Today's Outfits", sb_chat:'AI Stylist Chat',
+    sb_wardrobe:'My Wardrobe', sb_dna:'Style DNA', sb_more:'More',
+    sb_map:'Nearby Shops', sb_ar:'AR Fitting Room', sb_meta:'Metaverse',
+    weather_desc:'Cloudy · Great day to go out', occasion:'Today: Casual Friday',
+    deal_badge:'Daily Deal', deal_item:'UNIQLO Light Down Vest — Essential for your Spring type',
+    today_h2:"Today's 3 Outfits", today_sub:'Curated for your weather · skin tone · occasion',
+    badge_ai:'AI Pick',
+    outfit1_name:'Casual Romantic', outfit1_desc:'Cream knit jacket + floral skirt + white sneakers',
+    outfit2_name:'Minimal Chic', outfit2_desc:'Grey blazer + white tee + pink wide-leg trousers',
+    outfit3_name:'Forest Vibe', outfit3_desc:'Olive knit + brown leather trousers + tote bag',
+    score_colour_short:'Colour', score_92:'92 pts', score_87:'87 pts', score_83:'83 pts',
+    outfit_select:'Choose this look', outfit_buy:'Buy Link', aff_track:'Track',
+    kol_heading:'🔍 Let a KOL / Stylist curate your look',
+    kol_placeholder:'Search stylists, KOLs, artists…',
+    kol_hint:'After a KOL shares, MM collects data to generate similar looks in future',
+    score_title:"Today's Outfit Score — AI Analysis",
+    score_colour:'Colour suitability', score_trend:'Trend score', score_body:'Body flattery',
+    score_occasion:'Occasion fit', score_ratio:'6:3:1 colour ratio',
+    ratio_base:'60% Base', ratio_accent:'30% Accent',
+    chat_h2:'AI Stylist Chat', chat_sub:'Ask me anything about outfits, anytime',
+    tone_mean_btn:'💅 Mean Girl', tone_bestie_btn:'🥂 BFF', tone_pro_btn:'👔 Pro', tone_kol_btn:'📸 KOL',
+    chat_greeting:"Hey gorgeous! You're a Spring type — warm tones are literally your superpower. I've picked 3 looks for you today. Which one speaks to you? 😝",
+    chat_placeholder:'Ask anything… e.g. What should I wear to a job interview?',
+    ward_h2:'My Wardrobe', ward_sub:'32 items · AI organised',
+    ward_all:'All', ward_top:'Tops', ward_outer:'Outerwear', ward_bottom:'Skirts/Trousers',
+    ward_shoes:'Shoes', ward_acc:'Accessories', ward_vintage:'Vintage',
+    ward_upload:'Upload Item', ward_gap:'AI suggests adding',
+    wi_knit:'Knit Jacket', wi_cream:'Cream', wi_floral:'Floral Skirt', wi_pink:'Pink floral',
+    wi_scarf:'Scarf', wi_olive:'Olive green', wi_blazer:'Blazer', wi_grey:'Grey',
+    wi_sneaker:'Sneakers', wi_white:'White', wi_tote:'Tote Bag', wi_brown:'Brown', wi_gap:'Missing: neutral jacket',
+    dna_h2:'My Style DNA', dna_sub:'AI analysis of your fashion personality',
+    dna_title:'Spring × Romantic-Minimal',
+    dna_tag1:'Spring Warm Type', dna_tag2:'X-shape Body', dna_tag3:'Romantic Minimalist',
+    stat_colour:'Colour score', stat_body:'Body flattery', stat_count:'Items',
+    sat_title:'Satisfaction Survey', sat_q:'Does MM solve your daily outfit struggles?', sat_ok:'😐 So-so', sat_good:'😍 Love it',
+    map_h2:'Nearby Shops', map_sub:'Buy it now, skip the delivery wait', you_here:'You are here',
+    shop1_loc:'Causeway Bay', shop1_info:'Well stocked · AI-recommended items available',
+    shop2_info:'Niche vintage shop · Full inventory scanned',
+    shop3_loc:'Times Square', shop3_info:'New season drops · KOL collab styles',
+    shop4_name:'Local Designer Popup', shop4_info:'HK local brand · Exclusive collab',
+    ar_h2:'AR Fitting Room', ar_coming:'Coming Q4',
+    ar_title:'VR Closet — Virtual Wardrobe',
+    ar_sub:'Try on anything virtually — no physical fitting room needed<br>Freemium · Basic features free',
+    ar_join:'Join Waitlist', ar_cam:'Phone AR Try-On', ar_cam_sub:'Live camera fitting', ar_ai:'AI Outfit Swap', ar_ai_sub:'Upload a photo to swap your outfit',
+    meta_h2:'Metaverse Fashion Community', meta_coming:'Q5 Concept — "See it, Wear it"',
+    meta_title:'Dress how you want. Make friends.',
+    meta_sub:'Upload your real look. AI sculpts your ideal body. Style it with your dream wardrobe.',
+    meta_f1:'👥 Social Hub', meta_f2:'💎 VIP: Unlock more outfits', meta_f3:'👑 Virtual luxury try-on', meta_f4:'🎮 Fashion gamification',
+    meta_join:'Register for Early Access',
+    rating_title:"Rate Today's Outfit",
+    rating_sub:'Your ratings help AI understand you better 💛',
+    r_colour:'Colour', r_style:'Style / Cut', r_brand:'Brand / Vibe',
+    r_price:'Price acceptability', r_material:'Material',
+    r_buy_q:'Would you buy it?', r_yes:'Yes ✓', r_maybe:'Maybe', r_no:'No',
+    r_mm_q:'Does MM solve your daily outfit struggles?',
+    r_great:'😍 Very helpful', r_ok_chip:'😐 So-so', r_bad:'😕 Needs work',
+    r_skip:'Skip', r_submit:'Submit Rating →',
+    upload_loading:'AI analysing…', upload_scanning:'Detecting: X-shape body · Spring skin tone',
+    upload_done:'Analysis complete! X-shape · Spring tone', upload_retry:'Tap to re-upload',
+    aff_toast:'🔗 Link copied · Your purchase data will be recorded',
   }
 };
 
@@ -1746,216 +1699,67 @@ let currentLang = 'zh';
 function setLang(lang) {
   currentLang = lang;
   document.getElementById('html-root').lang = lang === 'zh' ? 'zh-HK' : 'en';
-  // Update all lang buttons
   document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', (btn.textContent.trim() === '中文' && lang === 'zh') || (btn.textContent.trim() === 'EN' && lang === 'en'));
+    const isZh = btn.textContent.trim() === '中文';
+    const isEn = btn.textContent.trim() === 'EN';
+    btn.classList.toggle('active', (isZh && lang === 'zh') || (isEn && lang === 'en'));
   });
-  // Translate all data-i18n elements
+  const dict = i18n[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    const val = i18n[lang][key];
-    if (val !== undefined) el.innerHTML = val;
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
   });
-  // Update dynamic chat greeting
-  const firstBubble = document.querySelector('#chat-messages .msg.ai .msg-bubble');
-  if (firstBubble) firstBubble.textContent = i18n[lang].chat_greeting;
-  // Update placeholder
+  const greeting = document.getElementById('chat-greeting');
+  if (greeting) greeting.textContent = dict.chat_greeting;
   const chatInput = document.getElementById('chat-input');
-  if (chatInput) chatInput.placeholder = i18n[lang].chat_placeholder;
-  // Update KOL search placeholder
-  const kolInput = document.querySelector('.kol-search-input');
-  if (kolInput) kolInput.placeholder = i18n[lang].kol_placeholder;
+  if (chatInput) chatInput.placeholder = dict.chat_placeholder;
+  const kolInput = document.getElementById('kol-input');
+  if (kolInput) kolInput.placeholder = dict.kol_placeholder;
 }
 
-// Navigation
-function go(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
+function go(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+function switchTab(btn,panelId) { document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); switchPanel(panelId); }
+function switchSidebar(btn,panelId) { document.querySelectorAll('.sidebar-item').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); switchPanel(panelId); }
+function switchPanel(id) { document.querySelectorAll('.content-panel').forEach(p=>p.classList.remove('active')); const p=document.getElementById(id); if(p) p.classList.add('active'); }
+function selectTone(el,tone) { el.closest('.tone-grid').querySelectorAll('.tone-card').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); }
+function selectSeason(el) { el.closest('.season-grid').querySelectorAll('.season-card').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); }
+function selectBudget(el) { el.closest('.budget-list').querySelectorAll('.budget-option').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); }
+function selectCdepth(el) { el.closest('.colour-depth-row').querySelectorAll('.cdepth-option').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); }
+function completeOnboarding() { go('s-main'); }
 
-function switchTab(btn, panelId) {
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  switchPanel(panelId);
-}
-function switchSidebar(btn, panelId) {
-  document.querySelectorAll('.sidebar-item').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  switchPanel(panelId);
-}
-function switchPanel(id) {
-  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-  const panel = document.getElementById(id);
-  if (panel) panel.classList.add('active');
-}
-
-function selectTone(el, tone) {
-  el.closest('.tone-grid').querySelectorAll('.tone-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selectSeason(el) {
-  el.closest('.season-grid').querySelectorAll('.season-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selectBudget(el) {
-  el.closest('.budget-list').querySelectorAll('.budget-option').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selectCdepth(el) {
-  el.closest('.colour-depth-row').querySelectorAll('.cdepth-option').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function setTheme(theme, btn) {
-  document.body.classList.remove('theme-tech','theme-warm');
-  if (theme !== 'default') document.body.classList.add('theme-' + theme);
-  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+function setTheme(theme,btn) { document.body.classList.remove('theme-tech','theme-warm'); if(theme!=='default') document.body.classList.add('theme-'+theme); document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
 
 function applyWeatherMood() {
-  const hr = new Date().getHours();
-  const body = document.body;
-  if (hr >= 17 || hr < 7) {
-    body.classList.add('weather-rain');
-    body.classList.remove('weather-sunny');
-    ['ov1','ov2','ov3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.filter = 'brightness(0.92) saturate(0.8)';
-    });
-    const wb = document.getElementById('mood-bar');
-    if (wb) wb.style.background = 'linear-gradient(90deg,#6080A0,#8090B0,#9AAAC0)';
-  } else {
-    body.classList.add('weather-sunny');
-    body.classList.remove('weather-rain');
-    const wb = document.getElementById('mood-bar');
-    if (wb) wb.style.background = 'linear-gradient(90deg,#FFD54F,#FFB300,#FF8F00)';
-  }
+  const hr=new Date().getHours(), rainy=hr>=17||hr<7;
+  document.body.classList.toggle('weather-rain',rainy); document.body.classList.toggle('weather-sunny',!rainy);
+  ['ov1','ov2','ov3'].forEach(id=>{const el=document.getElementById(id); if(el) el.style.filter=rainy?'brightness(0.92) saturate(0.8)':'';});
+  const wb=document.getElementById('mood-bar'); if(wb) wb.style.background=rainy?'linear-gradient(90deg,#6080A0,#8090B0,#9AAAC0)':'linear-gradient(90deg,#FFD54F,#FFB300,#FF8F00)';
 }
 applyWeatherMood();
 
-const kolData = [
-  {handle:'@fashionhk_queen', icon:'👑'},{handle:'@stylist_coco', icon:'📸'},
-  {handle:'@local_art_style', icon:'🎨'},{handle:'@vintage_hk', icon:'🎞️'},
-  {handle:'@minimal.hk', icon:'◽'},{handle:'@cottage_core_hk', icon:'🌿'},
-  {handle:'@kol_paris_chic', icon:'🗼'},{handle:'@ootd_museum', icon:'🏛️'},
-];
-function searchKOL(val) {
-  const container = document.getElementById('kol-results');
-  if (!container) return;
-  const filtered = val.trim() === '' ? kolData.slice(0,4) : kolData.filter(k => k.handle.includes(val.toLowerCase()));
-  container.innerHTML = filtered.map(k =>
-    `<div class="kol-chip"><div class="kol-chip-avatar">${k.icon}</div>${k.handle}</div>`
-  ).join('');
-}
+const kolData=[{handle:'@fashionhk_queen',icon:'👑'},{handle:'@stylist_coco',icon:'📸'},{handle:'@local_art_style',icon:'🎨'},{handle:'@vintage_hk',icon:'🎞️'},{handle:'@minimal.hk',icon:'◽'},{handle:'@cottage_core_hk',icon:'🌿'},{handle:'@kol_paris_chic',icon:'🗼'},{handle:'@ootd_museum',icon:'🏛️'}];
+function searchKOL(val) { const c=document.getElementById('kol-results'); if(!c) return; const f=val.trim()===''?kolData.slice(0,4):kolData.filter(k=>k.handle.includes(val.toLowerCase())); c.innerHTML=f.map(k=>`<div class="kol-chip"><div class="kol-chip-avatar">${k.icon}</div>${k.handle}</div>`).join(''); }
 
-function showAffLink(btn) {
-  const toast = document.createElement('div');
-  toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--cream);padding:12px 20px;border-radius:50px;font-size:13px;z-index:9000;white-space:nowrap;animation:fadeIn 0.2s ease';
-  toast.textContent = i18n[currentLang].aff_toast;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
+function showAffLink() { const t=document.createElement('div'); t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--charcoal);color:var(--cream);padding:12px 20px;border-radius:50px;font-size:13px;z-index:9000;white-space:nowrap;animation:fadeIn 0.2s ease'; t.textContent=i18n[currentLang].aff_toast; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
 
-function simulateUpload(el) {
-  const L = i18n[currentLang];
-  el.innerHTML = `<div class="upload-icon loading">⏳</div><div class="upload-title">${L.upload_loading}</div><div class="upload-hint">${L.upload_hint2}</div>`;
-  el.style.borderColor = 'var(--gold)';
-  setTimeout(() => {
-    el.innerHTML = `<div class="upload-icon">✅</div><div class="upload-title">${L.upload_done}</div><div class="upload-hint">${L.upload_retry}</div>`;
-    el.style.background = '#F0FAF0';
-  }, 2000);
-}
+function simulateUpload(el) { const d=i18n[currentLang]; el.innerHTML=`<div class="upload-icon loading">⏳</div><div class="upload-title">${d.upload_loading}</div><div class="upload-hint">${d.upload_scanning}</div>`; el.style.borderColor='var(--gold)'; setTimeout(()=>{el.innerHTML=`<div class="upload-icon">✅</div><div class="upload-title">${d.upload_done}</div><div class="upload-hint">${d.upload_retry}</div>`; el.style.background='#F0FAF0';},2000); }
 
-function completeOnboarding() { go('s-main'); }
-
-const toneMessages = {
-  zh: {
-    mean: ['姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！', '你今朝問面試著咩？照返舊例warm neutral就最穩陣，唔好突然整個紫色或者黑色出來嚇人囉 😅', 'Ok listen，你個衣櫥欠咗一件decent中性外套，有咗佢就萬能配啦！'],
-    bestie: ['靚女！你係Spring型呀，暖色系完全係你嘅天下～今日幫你搭咗3套，你最鍾意邊個呀？', '面試？緊係選清爽款啦！奶油白或粉色都好合適你膚色！✨'],
-    pro: ['根據您的Spring色彩分析，建議以warm tone為主，搭配60:30:10色彩比例。今日三套配搭均符合您的身型及場合需求。'],
-    kol: ['OMG你係Spring型！！最近超流行warm aesthetic，你真係天生適合！今天這套超出片的！🔥📸'],
-    parisian: ['Chérie, warm tones only — c\'est votre saison. Moins c\'est plus. 🗼'],
-    vintage: ['你個Spring型配古著好正！試吓70年代的warm earth tone，係一種態度。🎞️'],
-  },
-  en: {
-    mean: ['Honey, you\'re a Spring type — PLEASE stop wearing black! Warm tones are literally made for you 💅', 'Interview outfit? Stick to warm neutrals. Don\'t scare anyone with something drastic 😅', 'Your wardrobe is desperately missing a decent neutral jacket. That\'s the gap, fix it!'],
-    bestie: ['You\'re a Spring type babe — warm colours are literally your superpower! Which of today\'s 3 looks do you love? ✨', 'Interview? Go clean and fresh! Cream or blush will complement your skin tone beautifully 🌸'],
-    pro: ['Based on your Spring colour analysis, warm tones with a 60:30:10 ratio are recommended. Today\'s three outfits all suit your body shape and occasion.'],
-    kol: ['OMG you\'re Spring type?! Warm aesthetics are SO trending right now, you were literally made for this 🔥📸'],
-    parisian: ['Chérie, warm tones only — c\'est votre saison. Less is always more. 🗼'],
-    vintage: ['Your Spring type pairs beautifully with vintage! Try 70s warm earth tones — it\'s a whole mood. 🎞️'],
-  }
+const toneMessages={
+  zh:{ mean:['姐，你而家係Spring型，唔好再著黑色啦！啲warm tone先係你個命！','你今朝問面試著咩？照返舊例warm neutral就最穩陣 😅','Ok listen，你個衣櫥欠咗一件decent中性外套，有咗佢就萬能配啦！'], bestie:['靚女！你係Spring型，暖色系完全係你嘅天下！今日3套配搭你最鍾意邊個？','面試？選清爽款啦！奶油白或粉色都好合適你膚色！✨'], pro:['根據Spring色彩分析，建議以warm tone為主，搭配60:30:10色彩比例。','面試著裝建議：neutral warm tone展現專業同時不失個人特色。'], kol:['OMG你係Spring型！！warm aesthetic超流行，你天生適合！🔥📸'], parisian:["Chérie, warm tones only — c'est votre saison. Moins c'est plus. 🗼"], vintage:['你個Spring型配古著好正！試吓70年代warm earth tone，係一種態度。🎞️'] },
+  en:{ mean:["Honey, you're a Spring type — PLEASE stop wearing black! Warm tones are literally made for you 💅","Interview? Stick to warm neutrals. Don't scare anyone 😅","Your wardrobe desperately needs a decent neutral jacket. Fix it!"], bestie:["You're a Spring type babe — warm colours are your superpower! Which of today's 3 looks do you love? ✨","Interview? Go cream or blush — it'll look stunning on you 🌸"], pro:["Based on your Spring analysis, warm tones with a 60:30:10 ratio are recommended.","For interviews: neutral warm tones project professionalism with personal style."], kol:["OMG you're Spring type?! Warm aesthetics are SO trending right now 🔥📸"], parisian:["Chérie, warm tones only — c'est votre saison. Less is always more. 🗼"], vintage:["Your Spring type pairs beautifully with vintage! Try 70s warm earth tones — it's a whole mood. 🎞️"] }
 };
-let currentTone = 'mean';
+let currentTone='mean';
+function setTone(btn,tone){document.querySelectorAll('.tone-mini-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentTone=tone;}
+function sendChat(){const input=document.getElementById('chat-input');const msg=input.value.trim();if(!msg)return;const container=document.getElementById('chat-messages');const ud=document.createElement('div');ud.className='msg user';ud.innerHTML=`<div class="msg-bubble">${msg}</div>`;container.appendChild(ud);input.value='';const ty=document.createElement('div');ty.className='msg ai';ty.innerHTML='<div class="msg-avatar">MM</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';container.appendChild(ty);container.scrollTop=container.scrollHeight;setTimeout(()=>{const pool=(toneMessages[currentLang]||toneMessages.zh)[currentTone]||toneMessages.zh.mean;const reply=pool[Math.floor(Math.random()*pool.length)];ty.querySelector('.typing-indicator').outerHTML=`<div class="msg-bubble">${reply}</div>`;container.scrollTop=container.scrollHeight;},1200);}
+function handleChatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
 
-function setTone(btn, tone) {
-  document.querySelectorAll('.tone-mini-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentTone = tone;
-}
+function openRating(){document.getElementById('rating-modal').classList.add('open');}
+function closeModal(){document.getElementById('rating-modal').classList.remove('open');}
+function rateStar(star){const group=star.closest('.stars');const stars=group.querySelectorAll('.star');const idx=Array.from(stars).indexOf(star);stars.forEach((s,i)=>s.classList.toggle('lit',i<=idx));}
+function submitRating(){closeModal();}
 
-function sendChat() {
-  const input = document.getElementById('chat-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  const container = document.getElementById('chat-messages');
-  const userDiv = document.createElement('div');
-  userDiv.className = 'msg user';
-  userDiv.innerHTML = `<div class="msg-bubble">${msg}</div>`;
-  container.appendChild(userDiv);
-  input.value = '';
-  const typing = document.createElement('div');
-  typing.className = 'msg ai';
-  typing.innerHTML = '<div class="msg-avatar">MM</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-  container.appendChild(typing);
-  container.scrollTop = container.scrollHeight;
-  setTimeout(() => {
-    const replies = (toneMessages[currentLang] || toneMessages.zh)[currentTone] || toneMessages.zh.mean;
-    const reply = replies[Math.floor(Math.random() * replies.length)];
-    typing.querySelector('.typing-indicator').outerHTML = `<div class="msg-bubble">${reply}</div>`;
-    container.scrollTop = container.scrollHeight;
-  }, 1200);
-}
-
-function handleChatKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
-}
-
-function openRating() { document.getElementById('rating-modal').classList.add('open'); }
-function closeModal() { document.getElementById('rating-modal').classList.remove('open'); }
-function rateStar(star) {
-  const group = star.closest('.stars');
-  const stars = group.querySelectorAll('.star');
-  const idx = Array.from(stars).indexOf(star);
-  stars.forEach((s, i) => s.classList.toggle('lit', i <= idx));
-}
-function submitRating() { closeModal(); }
-
-function updateTimer() {
-  const el = document.getElementById('deal-timer');
-  if (!el) return;
-  const now = new Date();
-  const midnight = new Date(now); midnight.setHours(23,59,59,0);
-  const diff = midnight - now;
-  const h = String(Math.floor(diff/3600000)).padStart(2,'0');
-  const m = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
-  const s = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-  el.textContent = `${h}:${m}:${s}`;
-}
-setInterval(updateTimer, 1000);
-updateTimer();
-
-// Simulate upload
-function simulateUpload(el) {
-  el.innerHTML = '<div class="upload-icon loading">⏳</div><div class="upload-title">AI分析中…</div><div class="upload-hint">識別身型：X型 · 膚色：Spring暖色</div>';
-  el.style.borderColor = 'var(--gold)';
-  setTimeout(() => {
-    el.innerHTML = '<div class="upload-icon">✅</div><div class="upload-title">分析完成！X型身型 · Spring膚色</div><div class="upload-hint">點擊重新上傳</div>';
-    el.style.background = '#F0FAF0';
-  }, 2000);
-}
+function updateTimer(){const el=document.getElementById('deal-timer');if(!el)return;const now=new Date();const midnight=new Date(now);midnight.setHours(23,59,59,0);const diff=midnight-now;const h=String(Math.floor(diff/3600000)).padStart(2,'0');const m=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');const s=String(Math.floor((diff%60000)/1000)).padStart(2,'0');el.textContent=`${h}:${m}:${s}`;}
+setInterval(updateTimer,1000);updateTimer();
 </script>
 </body>
 </html>
